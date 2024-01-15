@@ -1,0 +1,4 @@
+openai
+pandas
+fuzzywuzzy
+python-dotenv
