@@ -79,10 +79,10 @@ def find_product_and_brand(article_content: str) -> Optional[dict]:
 def get_raw_product_and_brand(article_content: str) -> Tuple[List[str], List[str]]:
     """
     """
-    raw_product_and_brand = find_product_and_brand(article_content)
     list_of_product = []
     list_of_brand = []
     try:
+        raw_product_and_brand = find_product_and_brand(article_content)
         keys = list(raw_product_and_brand.keys())
         for key in keys:
             if key == "products":
@@ -116,7 +116,7 @@ def match_product_and_brand(list_of_product: List[str], list_of_brand: List[str]
     brand_match = []
     for product in list_of_product:
         similarity_scores = calculate_similarity(product_data, product)
-        if similarity_scores.max() > 70:
+        if similarity_scores.max() > 75:
             print(DATA.iloc[similarity_scores.idxmax()])
             print(f"product: {product}")
             print(f"score: {similarity_scores.max()}")
@@ -160,8 +160,9 @@ def run_trend_for_list_of_news(news_list: List[News]) -> List[News]:
 
 from extractor import extractor
 
-news = extractor(nb_days=30)
+news = extractor(nb_days=1)
 print(len(news))
+
 news = run_trend_for_list_of_news(news)
 
 products = []
@@ -172,11 +173,23 @@ for new in news:
 
 print(products)
 print(brands)
-
-#%%
-
 print(len(products))
 print(len(brands))
 
+
 # %%
 
+# for product in products:
+    # print(product)
+    # print(DATA[DATA['Product'] == product])
+
+# print("--------------------------------------------------")
+
+# for brand in brands:
+#     print(brand)
+    # print(DATA[DATA['Brand'] == brand])
+    # print("--------------------------------------------------")
+
+# %%
+
+# %%

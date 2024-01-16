@@ -2,3 +2,5 @@ openai
 pandas
 fuzzywuzzy
 python-dotenv
+feedparser
+newpaper3k

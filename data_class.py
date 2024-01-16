@@ -1,6 +1,6 @@
 from pydantic import BaseModel
-from datetime import datetime
-from typing import List
+# from datetime import datetime
+from typing import List, Any
 
 class News(BaseModel):
     title: str
@@ -9,7 +9,7 @@ class News(BaseModel):
     content: str
 
     
-    publishedAt: datetime
+    publishedAt: Any
 
     product_list: List[str] = []
     brand_list: List[str] = []

@@ -6,12 +6,17 @@ This module contains the functions to extract data from multiple sources and cre
 #%%
 import feedparser
 from datetime import datetime, timedelta
+
 from newspaper import Article
 
 from data_class import News
+from instagpy import InstaGPy
 
 #%%
 # FEEDS EXTRACTOR:
+
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 
 feed_urls = [
     "https://www.allure.com/feed/rss",
@@ -21,6 +26,7 @@ feed_urls = [
     "https://feeds.feedburner.com/nymag/fashion", 
 ]
 
+#%%
 def extract_url_from_rss(rss_url: str, nb_days: int = 30) -> list:
     """
     Extracts the URLs from the RSS feed of a website.
@@ -34,6 +40,8 @@ def extract_url_from_rss(rss_url: str, nb_days: int = 30) -> list:
     entries = []
     feed = feedparser.parse(rss_url)
     entries.extend(feed.entries)
+    print(f"Feed:{rss_url}")
+    print(f"Number of entries: {len(feed.entries)}")
     # Get the current date and time
     current_time = datetime.now()
     # List to store recent article links
@@ -118,6 +126,8 @@ def create_news_rss_feeds(
         Returns:
             list: List of News objects.
     """
+    print("Extracting data from RSS feeds...")
+    print(f"Number of RSS feeds: {len(rss_urls)}")
     urls = extract_urls_from_rss(rss_urls, nb_days)
     news_list = create_articles_from_urls(urls)
 
@@ -137,6 +147,88 @@ def create_news_rss_feeds(
 #%%
 # INSTAGRAM EXTRACTOR:
 
+account = [
+    # "samvissermakeup", 
+    "marioncameleon", 
+    "beasweetbeauty", 
+    "gelcream", 
+    "hungvanngo", 
+    "ritualofme", 
+    "katiejanehughes", 
+    "sortofobsessed", 
+    "patmcgrathreal", 
+    "violette_fr", 
+    "sokoglam",
+    "maryphillips",
+    "hannahbaxward",
+    "miramakeup",
+    "allanface",
+    "meron_aboya",
+    "patmcgrathreal",
+    "donni.davy",
+    "sabletoothtigre",
+    "katiejanehughes",
+    "dendoll",
+    "coolgirlswearmugler",
+    "riovn",
+    "adeolagboyega",
+    "rosegallagher",
+    "charlottetilbury",
+]
+
+def get_instagram_data(account: str, nb_days: int=30) -> "list[News]":
+    """
+    """
+    # print(f"Extracting data from Instagram account: {account}")
+    insta = InstaGPy()
+    date = datetime.now() - timedelta(days=nb_days)
+    date = date.strftime("%Y-%m-%d")
+    news_list = []
+    res = insta.get_profile_media(account, end_cursor=None, from_date=date, to_date=None, total=None)
+    try:
+        # print(res)
+        # print(res['data'])
+
+        for i in range(len(res['data'])):
+
+            news = News(
+                title=res['data'][i]['node']['edge_media_to_caption']['edges'][0]['node']['text'],
+                url=res['data'][i]['node']['display_url'],
+                source_type="instagram",
+                content=res['data'][i]['node']['edge_media_to_caption']['edges'][0]['node']['text'],
+                publishedAt=res['data'][i]['node']['taken_at_timestamp'],
+                product_list=[],
+                brand_list=[]
+            )
+            news_list.append(news)
+
+    except Exception as e:
+        print(e)
+        pass
+    return news_list
+
+# test = get_instagram_data(account[0], 30)
+
+
+def get_instagram_data_for_list_of_account(account: "list[str]"=account, nb_days: int=30) -> "list[News]":
+    """
+    """
+    news_list = []
+    for acc in account:
+        news_list.extend(get_instagram_data(acc, nb_days))
+    return news_list
+
+def create_news_instagram(nb_days: int=30) -> "list[News]":
+    """
+    """
+    news_list = []
+    # try:
+    news_list.extend(get_instagram_data_for_list_of_account(account, nb_days))
+    # except Exception as e:
+    #     print(e)
+    #     pass
+    return news_list
+
 
 #%%
 # GENERAL EXTRACTOR:
@@ -150,12 +242,13 @@ def extractor(nb_days: int=30) -> "list[News]":
             list: List of News objects.
     """
     news_list = []
-    news_list.extend(create_news_rss_feeds(nb_days=nb_days))
+    # news_list.extend(create_news_rss_feeds(nb_days=nb_days))
     # news_list.extend(create_news_twitter(nb_days=nb_days))
     # news_list.extend(create_news_youtube(nb_days=nb_days))
     # news_list.extend(create_news_tiktok(nb_days=nb_days))
-    # news_list.extend(create_news_instagram(nb_days=nb_days))
+    news_list.extend(create_news_instagram(nb_days=nb_days))
     
     return news_list
 
 #%%
+
