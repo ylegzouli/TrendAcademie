@@ -148,7 +148,7 @@ def create_news_rss_feeds(
 # INSTAGRAM EXTRACTOR:
 
 account = [
-    # "samvissermakeup", 
+    "samvissermakeup", 
     "marioncameleon", 
     "beasweetbeauty", 
     "gelcream", 
@@ -179,23 +179,35 @@ account = [
 def get_instagram_data(account: str, nb_days: int=30) -> "list[News]":
     """
     """
-    # print(f"Extracting data from Instagram account: {account}")
+    print(f"Extracting data from Instagram account: {account}")
     insta = InstaGPy()
     date = datetime.now() - timedelta(days=nb_days)
     date = date.strftime("%Y-%m-%d")
     news_list = []
     res = insta.get_profile_media(account, end_cursor=None, from_date=date, to_date=None, total=None)
     try:
-        # print(res)
-        # print(res['data'])
-
         for i in range(len(res['data'])):
+            username = res['data'][i]['node']['owner']['username']
+            likes = int(res['data'][i]['node']['edge_media_preview_like']['count'])
+            comments = int(res['data'][i]['node']['edge_media_to_comment']['count'])
+            is_video = res['data'][i]['node']['is_video']
+            video_url = None
+            video_view_count = None
+            if is_video:
+                video_url = res['data'][i]['node']['video_url']
+                video_view_count = int(res['data'][i]['node']['video_view_count'])
 
             news = News(
-                title=res['data'][i]['node']['edge_media_to_caption']['edges'][0]['node']['text'],
+                username=username,
                 url=res['data'][i]['node']['display_url'],
                 source_type="instagram",
                 content=res['data'][i]['node']['edge_media_to_caption']['edges'][0]['node']['text'],
+                likes=likes,
+                comments=comments,
+                is_video=is_video,
+                video_url=video_url,
+                video_view_count=video_view_count,
+                
                 publishedAt=res['data'][i]['node']['taken_at_timestamp'],
                 product_list=[],
                 brand_list=[]
@@ -206,8 +218,6 @@ def get_instagram_data(account: str, nb_days: int=30) -> "list[News]":
         print(e)
         pass
     return news_list
-
-# test = get_instagram_data(account[0], 30)
 
 
 def get_instagram_data_for_list_of_account(account: "list[str]"=account, nb_days: int=30) -> "list[News]":
@@ -222,11 +232,7 @@ def create_news_instagram(nb_days: int=30) -> "list[News]":
     """
     """
     news_list = []
-    # try:
     news_list.extend(get_instagram_data_for_list_of_account(account, nb_days))
-    # except Exception as e:
-    #     print(e)
-    #     pass
     return news_list
 
 
@@ -251,4 +257,3 @@ def extractor(nb_days: int=30) -> "list[News]":
     return news_list
 
 #%%
-

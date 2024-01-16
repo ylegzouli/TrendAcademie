@@ -149,10 +149,12 @@ def run_trend(new: News) -> News:
 def run_trend_for_list_of_news(news_list: List[News]) -> List[News]:
     """
     """
+    news_list_ok = []
     for new in news_list:
-        new.product_list, new.brand_list = run_trend(new)
+        new_ok = run_trend(new)
+        news_list_ok.append(new_ok) 
 
-    return news_list
+    return news_list_ok
 
 
 #%%
@@ -179,16 +181,14 @@ print(len(brands))
 
 # %%
 
-# for product in products:
-    # print(product)
-    # print(DATA[DATA['Product'] == product])
+for product in products:
+    print(product)
 
-# print("--------------------------------------------------")
+print("--------------------------------------------------")
 
-# for brand in brands:
-#     print(brand)
-    # print(DATA[DATA['Brand'] == brand])
-    # print("--------------------------------------------------")
+for brand in brands:
+    print(brand)
+print("--------------------------------------------------")
 
 # %%
 
