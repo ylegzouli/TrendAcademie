@@ -8,14 +8,14 @@ class News(BaseModel):
     url: str
     source_type: str
     content: str
-    
+
     likes: int = 0
     comments: int = 0
     is_video: bool
     video_url: Optional[str] = None
     video_view_count: Optional[int] = None
 
-    
+
     publishedAt: Any
 
     product_list: List[str] = []
@@ -34,7 +34,7 @@ class News(BaseModel):
     # source_type: str
     # content: str
 
-    
+
     # publishedAt: Any
 
     # product_list: List[str] = []

@@ -20,6 +20,14 @@ def mock_news(n: int) -> List[News]:
     """
     fake = Faker()
     news_list = []
+    product_names = [
+        'Master Mattes™ Liquid Eyeliner',
+        'Liquid Touch Foundation Brush',
+        'EF 2 Makeup Brush',
+        'Eye Basics Primer',
+        'KissKiss Liplift Lipstick Primer',
+        'Benefiance NutriPerfect Night Cream'
+    ]
     for _ in range(n):
         news = News(
             idx=fake.random_int(),
@@ -33,11 +41,15 @@ def mock_news(n: int) -> List[News]:
             video_url=fake.url() if fake.boolean() else None,
             video_view_count=fake.random_int(min=0, max=10000) if fake.boolean() else None,
             publishedAt=fake.date_time(),
-            product_list=[fake.word() for _ in range(5)],
-            brand_list=[fake.word() for _ in range(5)]
+            product_list=[fake.random_element(product_names) for _ in range(2)],
+            brand_list=[fake.word() for _ in range(2)]
         )
         news_list.append(news)
     return news_list
 
-news = mock_news(3)
-news_to_csv(news)
+def main():
+    news = mock_news(3)
+    news_to_csv(news)
+
+if __name__ == "__main__":
+    main()

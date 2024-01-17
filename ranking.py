@@ -29,3 +29,33 @@ def mock_products():
 
 def mock_brands():
     return news_to_brand_occurence(mock_news(20)).to_dict(orient='records')
+
+def news_to_sephora_products(df_news: pd.DataFrame, df_sephora: pd.DataFrame) -> pd.DataFrame:
+    """
+    This function takes two dataframes as input, one containing news data and the other containing Sephora product data.
+    It extracts the product names from the news data, finds the corresponding Sephora product IDs, and creates a new dataframe
+    that maps each product name to its Sephora ID and the IDs of the news articles where it's mentioned.
+    """
+
+    import ast
+    df_news['product_list'] = df_news['product_list'].apply(ast.literal_eval)
+    product_names = sum(df_news['product_list'].tolist(), [])
+    product_names = list(set(product_names))
+
+    df_products = pd.DataFrame([], columns=['product_name', 'id_sephora', 'id_news'])
+
+    for product_name in product_names:
+        id_news = df_news[df_news.product_list.apply(lambda x: product_name in x)].index.tolist()
+        id_sephora = df_sephora[df_sephora.Product == product_name].index.tolist()[0]
+        df_products = df_products._append({'product_name': product_name, 'id_sephora': id_sephora, 'id_news': id_news}, ignore_index=True)
+    return df_products
+
+
+def main():
+    df_news = pd.read_csv('data/news.csv')
+    df_sephora = pd.read_csv('data/sephora.csv')
+    df_products = news_to_sephora_products(df_news, df_sephora)
+    print(df_products)
+
+if __name__ == "__main__":
+    main()
