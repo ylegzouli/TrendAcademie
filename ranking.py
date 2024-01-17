@@ -3,6 +3,7 @@ from typing import List
 from data_class import News
 from news_to_csv import mock_news
 import pandas as pd
+import ast
 
 def news_to_product_occurence(news_list: List[News]) -> pd.DataFrame:
     """
@@ -37,7 +38,6 @@ def news_to_sephora_products(df_news: pd.DataFrame, df_sephora: pd.DataFrame) ->
     that maps each product name to its Sephora ID and the IDs of the news articles where it's mentioned.
     """
 
-    import ast
     df_news['product_list'] = df_news['product_list'].apply(ast.literal_eval)
     product_names = sum(df_news['product_list'].tolist(), [])
     product_names = list(set(product_names))
@@ -50,6 +50,18 @@ def news_to_sephora_products(df_news: pd.DataFrame, df_sephora: pd.DataFrame) ->
         df_products = df_products._append({'product_name': product_name, 'id_sephora': id_sephora, 'id_news': id_news}, ignore_index=True)
     return df_products
 
+def news_to_sephora_brands(df_news: pd.DataFrame) -> pd.DataFrame:
+
+    df_news['brand_list'] = df_news['brand_list'].apply(ast.literal_eval)
+    brand_names = sum(df_news['brand_list'].tolist(), [])
+    brand_names = list(set(brand_names))
+
+    df_brands = pd.DataFrame([], columns=['brand_name', 'id_news'])
+
+    for brand_name in brand_names:
+        id_news = df_news[df_news.brand_list.apply(lambda x: brand_name in x)].index.tolist()
+        df_brands = df_brands._append({'brand_name': brand_name, 'id_news': id_news}, ignore_index=True)
+    return df_brands
 
 def get_top_products(df_products: pd.DataFrame, df_sephora: pd.DataFrame, n: int):
     """
@@ -68,6 +80,12 @@ def get_top_products(df_products: pd.DataFrame, df_sephora: pd.DataFrame, n: int
 
     return df_sephora_rows
 
+def get_top_brands(df_brands: pd.DataFrame, n: int):
+    df_brands['id_news_len'] = df_brands['id_news'].apply(len)
+    df_brands = df_brands.sort_values('id_news_len', ascending=False)
+    df_brands = df_brands.drop(columns=['id_news_len'])
+    top_brand_names = df_brands.head(n)['brand_name'].values
+    return top_brand_names
 
 def main():
     df_news = pd.read_csv('data/news.csv')
@@ -79,6 +97,11 @@ def main():
     df_top_products = get_top_products(df_products, df_sephora, 1)
     print(df_top_products)
 
+    df_brands = news_to_sephora_brands(df_news)
+    print(df_brands)
+
+    df_top_brands = get_top_brands(df_brands, 1)
+    print(df_top_brands)
 
 if __name__ == "__main__":
     main()
