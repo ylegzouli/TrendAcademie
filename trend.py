@@ -143,7 +143,7 @@ def run_trend(new: News) -> News:
     product_list, brand_list = get_raw_product_and_brand(new.content)
     new.product_list, new.brand_list = match_product_and_brand(product_list, brand_list)
 
-    return new.product_list, new.brand_list
+    return news
 
 
 def run_trend_for_list_of_news(news_list: List[News]) -> List[News]:
@@ -165,37 +165,45 @@ from extractor import extractor
 news = extractor(nb_days=30)
 print(len(news))
 
+#%%
+
 news = run_trend_for_list_of_news(news)
-
-from news_to_csv import news_to_csv
-
-news_to_csv(news, "data/news.csv")
 
 #%%
 
-products = []
-brands = []
-for new in news:
-    products.extend(new.product_list)
-    brands.extend(new.brand_list)
+from news_to_csv import news_to_csv
 
-print(products)
-print(brands)
-print(len(products))
-print(len(brands))
+news_to_csv(news)
 
+#%%
+
+# products = []
+# brands = []
+# for new in news:
+#     products.extend(new.product_list)
+#     brands.extend(new.brand_list)
+
+# print(products)
+# print(brands)
+# print(len(products))
+# print(len(brands))
+
+
+# %%
+
+# for product in products:
+#     print(product)
+
+# print("--------------------------------------------------")
+
+# for brand in brands:
+#     print(brand)
+# print("--------------------------------------------------")
 
 # %%
 
-for product in products:
-    print(product)
-
-print("--------------------------------------------------")
-
-for brand in brands:
-    print(brand)
-print("--------------------------------------------------")
-
 # %%
+
+data = pd.read_csv("data/news.csv")
 
 # %%

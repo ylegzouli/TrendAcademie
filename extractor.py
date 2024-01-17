@@ -166,7 +166,6 @@ account = [
     "meron_aboya",
     "donni.davy",
     "sabletoothtigre",
-    "katiejanehughes",
     "dendoll",
     "coolgirlswearmugler",
     "riovn",
@@ -189,7 +188,7 @@ account = [
     "samchapman",
     "priscillaono",
     "katiejanehughes",
-    "thevalgarland"
+    "thevalgarland",
 ]
 
 

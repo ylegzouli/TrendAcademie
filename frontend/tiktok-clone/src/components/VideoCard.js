@@ -10,50 +10,33 @@ const VideoCard = ({
   lastVideoIndex,
   getVideos,
 }) => {
-  const video = useRef();
-  const isInViewport = useIsInViewport(video);
+  const videoRef = useRef();
+  const isInViewport = useIsInViewport(videoRef);
   const [loadNewVidsAt, setloadNewVidsAt] = useState(lastVideoIndex);
-
+  const vid = videoURL;
   if (isInViewport) {
     setTimeout(() => {
-      video.current.play();
+      videoRef.current.play();
     }, 1000);
 
-    if (loadNewVidsAt === Number(video.current.id)) {
-      setloadNewVidsAt((prev) => prev + 2);
+    if (loadNewVidsAt === Number(videoRef.current.id)) {
+      setloadNewVidsAt((prev) => prev + 1);
       getVideos(3);
     }
   }
 
-//   const togglePlay = () => {
-//     let currentVideo = video.current;
-//     if (currentVideo.paused) {
-//       currentVideo.play();
-//     } else {
-//       currentVideo.pause();
-//     }
-//   };
-
   const togglePlay = () => {
-  let currentVideo = video.current;
-  currentVideo.play();
-//   if (currentVideo.paused) {
-//     let playPromise = currentVideo.play();
-//     if (playPromise !== undefined) {
-//       playPromise.then(_ => {
-//         // Automatic playback started!
-//       }).catch(error => {
-//         // Auto-play was prevented
-//       });
-//     }
-//   } else {
-//     // currentVideo.pause();
-//   }
-};
+    let currentVideo = videoRef.current;
+    if (currentVideo.paused) {
+      currentVideo.play();
+    } else {
+      currentVideo.pause();
+    }
+  };
 
   useEffect(() => {
     if (!isInViewport) {
-      video.current.pause();
+      videoRef.current.pause();
     }
   }, [isInViewport]);
 
@@ -62,12 +45,12 @@ const VideoCard = ({
       <video
         muted
         className="video"
-        ref={video}
+        ref={videoRef}
         onClick={togglePlay}
         id={index}
-        autoPlay={index === 1}
+        autoPlay
       >
-        <source src={videoURL} type="video/mp4" />
+        <source src={vid} type="video/mp4" />
       </video>
       <div className="video-content" onClick={togglePlay}>
         <p>@{author}</p>
