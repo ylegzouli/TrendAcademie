@@ -25,14 +25,31 @@ const VideoCard = ({
     }
   }
 
+//   const togglePlay = () => {
+//     let currentVideo = video.current;
+//     if (currentVideo.paused) {
+//       currentVideo.play();
+//     } else {
+//       currentVideo.pause();
+//     }
+//   };
+
   const togglePlay = () => {
-    let currentVideo = video.current;
-    if (currentVideo.paused) {
-      currentVideo.play();
-    } else {
-      currentVideo.pause();
-    }
-  };
+  let currentVideo = video.current;
+  currentVideo.play();
+//   if (currentVideo.paused) {
+//     let playPromise = currentVideo.play();
+//     if (playPromise !== undefined) {
+//       playPromise.then(_ => {
+//         // Automatic playback started!
+//       }).catch(error => {
+//         // Auto-play was prevented
+//       });
+//     }
+//   } else {
+//     // currentVideo.pause();
+//   }
+};
 
   useEffect(() => {
     if (!isInViewport) {
