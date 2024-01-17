@@ -23,7 +23,7 @@ feed_urls = [
     "https://www.barbiesbeautybits.com/feeds/posts/default?alt=rss",
     "https://thedermreview.com/feed/",
     "http://www.beautycrazed.ca/feeds/posts/default?alt=rss",
-    "https://feeds.feedburner.com/nymag/fashion", 
+    "https://feeds.feedburner.com/nymag/fashion",
 ]
 
 #%%
@@ -70,7 +70,7 @@ def extract_urls_from_rss(rss_urls: list, nb_days: int=30) -> list:
     recent_articles = []
     for rss_url in rss_urls:
         recent_articles.extend(extract_url_from_rss(rss_url, nb_days))
-    
+
     return recent_articles
 
 def create_article_from_url(url: str) -> News:
@@ -115,7 +115,7 @@ def create_articles_from_urls(urls: list) -> "list[News]":
     return news_list
 
 def create_news_rss_feeds(
-        rss_urls: "list[str]"=feed_urls, 
+        rss_urls: "list[str]"=feed_urls,
         nb_days: int=30
 ) -> "list[News]":
     """
@@ -148,23 +148,22 @@ def create_news_rss_feeds(
 # INSTAGRAM EXTRACTOR:
 
 account = [
-    "samvissermakeup", 
-    "marioncameleon", 
-    "beasweetbeauty", 
-    "gelcream", 
-    "hungvanngo", 
-    "ritualofme", 
-    "katiejanehughes", 
-    "sortofobsessed", 
-    "patmcgrathreal", 
-    "violette_fr", 
+    "samvissermakeup",
+    "marioncameleon",
+    "beasweetbeauty",
+    "gelcream",
+    "hungvanngo",
+    "ritualofme",
+    "katiejanehughes",
+    "sortofobsessed",
+    "patmcgrathreal",
+    "violette_fr",
     "sokoglam",
     "maryphillips",
     "hannahbaxward",
     "miramakeup",
     "allanface",
     "meron_aboya",
-    "patmcgrathreal",
     "donni.davy",
     "sabletoothtigre",
     "katiejanehughes",
@@ -174,12 +173,25 @@ account = [
     "adeolagboyega",
     "rosegallagher",
     "charlottetilbury",
-
-    "patmcgrathreal",
     "namvo",
     "makeupbymario",
     "patrickta",
+    "aliandreeamakeup",
+    "lisaeldridgemakeup",
+    "ninaubhi",
+    "jamiepaigebeauty",
+    "ling.kt",
+    "nikki_makeup",
+    "jadeywadey180",
+    "maryphillips",
+    "natashadenona",
+    "daniellemarcan",
+    "samchapman",
+    "priscillaono",
+    "katiejanehughes",
+    "thevalgarland"
 ]
+
 
 def get_instagram_data(account: str, nb_days: int=30) -> "list[News]":
     """
@@ -212,7 +224,7 @@ def get_instagram_data(account: str, nb_days: int=30) -> "list[News]":
                 is_video=is_video,
                 video_url=video_url,
                 video_view_count=video_view_count,
-                
+
                 publishedAt=res['data'][i]['node']['taken_at_timestamp'],
                 product_list=[],
                 brand_list=[]
@@ -258,7 +270,7 @@ def extractor(nb_days: int=30) -> "list[News]":
     # news_list.extend(create_news_youtube(nb_days=nb_days))
     # news_list.extend(create_news_tiktok(nb_days=nb_days))
     news_list.extend(create_news_instagram(nb_days=nb_days))
-    
+
     return news_list
 
 #%%
