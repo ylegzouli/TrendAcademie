@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from ranking import mock_products
+from ranking import mock_products, mock_brands
 
 app = FastAPI()
 
@@ -10,3 +10,7 @@ def read_root():
 @app.get("/products")
 def get_products():
     return mock_products()
+
+@app.get("/brands")
+def get_brands():
+    return mock_brands()
