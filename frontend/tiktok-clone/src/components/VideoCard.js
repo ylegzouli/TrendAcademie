@@ -1,33 +1,62 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import useIsInViewport from "../useIsInViewport";
 
-const VideoCard = ({ index, lastVideoIndex, getVideos }) => {
-  const elementRef = useRef();
-  const isInViewport = useIsInViewport(elementRef);
+const VideoCard = ({
+  index,
+  author,
+  videoURL,
+  authorLink,
+  lastVideoIndex,
+  getVideos,
+}) => {
+  const video = useRef();
+  const isInViewport = useIsInViewport(video);
   const [loadNewVidsAt, setloadNewVidsAt] = useState(lastVideoIndex);
 
   if (isInViewport) {
-    if (loadNewVidsAt === Number(elementRef.current.id)) {
-      // increase loadNewVidsAt by 2
+    setTimeout(() => {
+      video.current.play();
+    }, 1000);
+
+    if (loadNewVidsAt === Number(video.current.id)) {
       setloadNewVidsAt((prev) => prev + 2);
       getVideos(3);
     }
   }
 
+  const togglePlay = () => {
+    let currentVideo = video.current;
+    if (currentVideo.paused) {
+      currentVideo.play();
+    } else {
+      currentVideo.pause();
+    }
+  };
+
+  useEffect(() => {
+    if (!isInViewport) {
+      video.current.pause();
+    }
+  }, [isInViewport]);
+
   return (
     <div className="slider-children">
-      <div
-        ref={elementRef}
+      <video
+        muted
+        className="video"
+        ref={video}
+        onClick={togglePlay}
         id={index}
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex",
-          height: "100%",
-        }}
+        autoPlay={index === 1}
       >
-        <h1>Video {index}</h1>
+        <source src={videoURL} type="video/mp4" />
+      </video>
+      <div className="video-content" onClick={togglePlay}>
+        <p>@{author}</p>
+        <p>
+          Video by <a href={authorLink}>{author} </a> on Pexel
+        </p>
       </div>
     </div>
   );
