@@ -51,11 +51,34 @@ def news_to_sephora_products(df_news: pd.DataFrame, df_sephora: pd.DataFrame) ->
     return df_products
 
 
+def get_top_products(df_products: pd.DataFrame, df_sephora: pd.DataFrame, n: int):
+    """
+    Sorts df_products by the length of 'id_news', takes the top n products, and returns the corresponding rows from df_sephora.
+    """
+    df_products['id_news_len'] = df_products['id_news'].apply(len)
+    df_products = df_products.sort_values('id_news_len', ascending=False)
+    df_products = df_products.drop(columns=['id_news_len'])
+
+    top_product_names = df_products.head(n)['product_name'].values
+
+    df_sephora_rows = pd.DataFrame()
+    for product_name in top_product_names:
+        df_sephora_row = df_sephora[df_sephora['Product'] == product_name]
+        df_sephora_rows = pd.concat([df_sephora_rows, df_sephora_row])
+
+    return df_sephora_rows
+
+
 def main():
     df_news = pd.read_csv('data/news.csv')
     df_sephora = pd.read_csv('data/sephora.csv')
+
     df_products = news_to_sephora_products(df_news, df_sephora)
     print(df_products)
+
+    df_top_products = get_top_products(df_products, df_sephora, 1)
+    print(df_top_products)
+
 
 if __name__ == "__main__":
     main()
