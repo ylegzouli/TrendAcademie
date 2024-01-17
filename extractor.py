@@ -87,7 +87,7 @@ def create_article_from_url(url: str) -> News:
         article.parse()
 
         news = News(
-            title=article.title,
+            username=article.title,
             url=article.url,
             source_type="newsfeed",
             content=article.text,
@@ -174,6 +174,11 @@ account = [
     "adeolagboyega",
     "rosegallagher",
     "charlottetilbury",
+
+    "patmcgrathreal",
+    "namvo",
+    "makeupbymario",
+    "patrickta",
 ]
 
 def get_instagram_data(account: str, nb_days: int=30) -> "list[News]":

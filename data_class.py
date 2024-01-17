@@ -1,15 +1,16 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 # from datetime import datetime
 from typing import List, Any, Optional
 
 class News(BaseModel):
+    idx: Optional[int] = Field(default=None, primary_key=True)
     username: str
-    likes: int
-    comments: int
     url: str
     source_type: str
     content: str
     
+    likes: int = 0
+    comments: int = 0
     is_video: bool
     video_url: Optional[str] = None
     video_view_count: Optional[int] = None

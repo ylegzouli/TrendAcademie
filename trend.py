@@ -162,10 +162,16 @@ def run_trend_for_list_of_news(news_list: List[News]) -> List[News]:
 
 from extractor import extractor
 
-news = extractor(nb_days=1)
+news = extractor(nb_days=30)
 print(len(news))
 
 news = run_trend_for_list_of_news(news)
+
+from news_to_csv import news_to_csv
+
+news_to_csv(news, "data/news.csv")
+
+#%%
 
 products = []
 brands = []
