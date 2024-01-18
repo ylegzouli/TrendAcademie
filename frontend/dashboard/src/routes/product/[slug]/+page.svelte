@@ -1,8 +1,14 @@
+
 <script>
-	// /** @type {import('./$types').PageData} */
-	/** @type {import('$lib/$types').PageData} */
-	export let data;
+    import { onDestroy } from 'svelte';
+    import { page } from '$app/stores';
+
+    let slug;
+    const unsubscribe = page.subscribe(({ params }) => {
+        slug = params.slug;
+    });
+
+    onDestroy(unsubscribe);
 </script>
 
-<h1>{data.title ? data.title : 'Default Title'}</h1>
-<div>{@html data.content}</div>
+<h1>Product: {slug}</h1>

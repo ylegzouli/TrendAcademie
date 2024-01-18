@@ -1,4 +1,9 @@
 <script>
+
+    function getBasename(filename) {
+        return filename.split('.').slice(0, -1).join('.');
+    }
+
     const images = [
         "sephora0.webp",
         "sephora1.webp",
@@ -6,6 +11,7 @@
         "sephora3.webp",
         "sephora4.webp"
     ]
+
 </script>
 
 <div class="navbar bg-base-300 rounded-box">
@@ -32,78 +38,15 @@
 <br>
 
 <h1 class="text-lg font-bold">PRODUCTS</h1>
+
 <div class="carousel rounded-box">
     {#each images as image}
-        <!-- <a href="" class="carousel-item"> -->
-        <div class="carousel-item">
+        <a href="product/{getBasename(image)}" class="carousel-item">
             <img src={image} alt="foo" />
-        </div>
+        </a>
     {/each}
 </div>
 
-<!--
-<br>
-<br>
-<br>
-<br>
-
-<h1 class="text-lg font-bold">PRODUCTS</h1>
-
-<div class="carousel rounded-box">
-    <a href="" class="carousel-item">
-      <img src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg" alt="Burger" />
-    </a>
-    <div class="carousel-item">
-      <img src="https://daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.jpg" alt="Burger" />
-    </div>
-    <div class="carousel-item">
-      <img src="https://daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg" alt="Burger" />
-    </div>
-    <div class="carousel-item">
-      <img src="https://daisyui.com/images/stock/photo-1494253109108-2e30c049369b.jpg" alt="Burger" />
-    </div>
-    <div class="carousel-item">
-      <img src="https://daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.jpg" alt="Burger" />
-    </div>
-    <div class="carousel-item">
-      <img src="https://daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg" alt="Burger" />
-    </div>
-    <div class="carousel-item">
-      <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" alt="Burger" />
-    </div>
-  </div>
-
-<br>
-<br>
-<br>
-<br>
-
-<h1 class="text-lg font-bold">BRANDS</h1>
-
-<div class="carousel rounded-box">
-    <a href="" class="carousel-item">
-      <img src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg" alt="Burger" />
-    </a>
-    <div class="carousel-item">
-      <img src="https://daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.jpg" alt="Burger" />
-    </div>
-    <div class="carousel-item">
-      <img src="https://daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg" alt="Burger" />
-    </div>
-    <div class="carousel-item">
-      <img src="https://daisyui.com/images/stock/photo-1494253109108-2e30c049369b.jpg" alt="Burger" />
-    </div>
-    <div class="carousel-item">
-      <img src="https://daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.jpg" alt="Burger" />
-    </div>
-    <div class="carousel-item">
-      <img src="https://daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg" alt="Burger" />
-    </div>
-    <div class="carousel-item">
-      <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" alt="Burger" />
-    </div>
-  </div>
--->
 
 <style>
     .carousel-item {
@@ -113,4 +56,5 @@
     .carousel-item:last-child {
       border-right: none; /* Remove border from the last item */
     }
+
 </style>
