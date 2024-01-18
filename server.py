@@ -19,19 +19,17 @@ def get_brands():
     return mock_brands()
 
 
-
 @app.get("/videos/{index}")
 def get_video(index):
     urls=[
-        "https://scontent-cdg4-1.cdninstagram.com/v/t50.2886-16/417436579_1080499526330758_215613097491880371_n.mp4?_nc_ht=scontent-cdg4-1.cdninstagram.com&_nc_cat=110&_nc_ohc=16IFgHVwS1MAX_vlAyI&edm=APU89FABAAAA&ccb=7-5&oh=00_AfDiKh08QzohbmAmznLFYGDmOo-Ea-rI-dvtYiC2jZGR4Q&oe=65A8D3F0&_nc_sid=bc0c2c196",
-        "https://scontent-cdg4-2.cdninstagram.com/v/t66.30100-16/319808562_2258517181013545_1850716767111014688_n.mp4?_nc_ht=scontent-cdg4-2.cdninstagram.com&_nc_cat=101&_nc_ohc=ZH19G6R1_RsAX_tqJqx&edm=APU89FABAAAA&ccb=7-5&oh=00_AfCj7f11R1xPcHSpFq8s9A9h6oRZMnSKEFvWj4y8ljFDfQ&oe=65A88DE7&_nc_sid=bc0c2c12411",
-        "https://scontent-cdg4-3.cdninstagram.com/v/t66.30100-16/44594778_285924937463706_4571124146553048690_n.mp4?efg=e30&_nc_ht=scontent-cdg4-3.cdninstagram.com&_nc_cat=106&_nc_ohc=q4lVGWdEklkAX9kAXf0&edm=APU89FABAAAA&ccb=7-5&oh=00_AfDVbYMTQuW7WQx1opYYXP8MksXc9AYEQVSkeFdaxqx92w&oe=65AC1C4B&_nc_sid=bc0c2c4431",
-        "https://scontent-cdg4-2.cdninstagram.com/v/t50.2886-16/420157391_756580589659297_9198608714297025278_n.mp4?_nc_ht=scontent-cdg4-2.cdninstagram.com&_nc_cat=101&_nc_ohc=f3gu2Tu7-3wAX-Z11x9&edm=APU89FABAAAA&ccb=7-5&oh=00_AfDWBcE4tQERGh1mEZg7DMVwjMUsC9gPXaEFULfNubfKcw&oe=65A8ABCE&_nc_sid=bc0c2c4727",
-        "https://scontent-cdg4-2.cdninstagram.com/v/t66.30100-16/319808562_2258517181013545_1850716767111014688_n.mp4?_nc_ht=scontent-cdg4-2.cdninstagram.com&_nc_cat=101&_nc_ohc=ZH19G6R1_RsAX_tqJqx&edm=APU89FABAAAA&ccb=7-5&oh=00_AfCj7f11R1xPcHSpFq8s9A9h6oRZMnSKEFvWj4y8ljFDfQ&oe=65A88DE7&_nc_sid=bc0c2c12441",
-        "https://scontent-cdg4-3.cdninstagram.com/v/t66.30100-16/44594778_285924937463706_4571124146553048690_n.mp4?efg=e30&_nc_ht=scontent-cdg4-3.cdninstagram.com&_nc_cat=106&_nc_ohc=q4lVGWdEklkAX9kAXf0&edm=APU89FABAAAA&ccb=7-5&oh=00_AfDVbYMTQuW7WQx1opYYXP8MksXc9AYEQVSkeFdaxqx92w&oe=65AC1C4B&_nc_sid=bc0c2c4435",
-        "https://scontent-cdg4-2.cdninstagram.com/v/t66.30100-16/10000000_400629559005583_1793153788025731579_n.mp4?_nc_ht=scontent-cdg4-2.cdninstagram.com&_nc_cat=107&_nc_ohc=cgPY4BlLI5AAX--KWOl&edm=APU89FABAAAA&ccb=7-5&oh=00_AfALbFnk7jeH9F5bZGdr-5JH_WNw8vxGFyn57Dozm1hrcg&oe=65A8D0A4&_nc_sid=bc0c2c1508",
-        "https://scontent-cdg4-2.cdninstagram.com/v/t66.30100-16/10000000_804052331483361_4024662045141313406_n.mp4?_nc_ht=scontent-cdg4-2.cdninstagram.com&_nc_cat=109&_nc_ohc=FrTdDEwZYZ0AX-bLWQ2&edm=APU89FABAAAA&ccb=7-5&oh=00_AfDxxvct-rq2tvQelxg22e-06JnH0IE_ZNDgUFM5PevANA&oe=65A8A13C&_nc_sid=bc0c2c33950",
-        "https://scontent-cdg4-3.cdninstagram.com/v/t66.30100-16/43553745_899150398568819_2128775764771834163_n.mp4?_nc_ht=scontent-cdg4-3.cdninstagram.com&_nc_cat=111&_nc_ohc=Z51OiNschFEAX8gBQws&edm=APU89FABAAAA&ccb=7-5&oh=00_AfBwY7eKXAPqePCXb6UTCu5F-yz1s9ijOOlznVYFE7tK6g&oe=65A8BBF4&_nc_sid=bc0c2c30883"
+        "https://scontent-cdg4-3.cdninstagram.com/v/t66.30100-16/10000000_1810461859469680_7186422982601872063_n.mp4?_nc_ht=scontent-cdg4-3.cdninstagram.com&_nc_cat=104&_nc_ohc=XKtTHsCOSZEAX_v0hnj&edm=APU89FABAAAA&ccb=7-5&oh=00_AfCBg6DZRoSdVucUXpBieZ073uXL3ZLBW45bHtF7sSE8CA&oe=65AA6B2F&_nc_sid=bc0c2c",
+        "https://scontent-cdg4-3.cdninstagram.com/v/t66.30100-16/10000000_865624752232828_420909119339530190_n.mp4?_nc_ht=scontent-cdg4-3.cdninstagram.com&_nc_cat=104&_nc_ohc=S7OlkE0ZF2cAX9UjXgI&edm=APU89FABAAAA&ccb=7-5&oh=00_AfCfChBT3JuIaUiAoYFwWdUIVVk8qQ1vigDscVcChwnXvA&oe=65A9CCC4&_nc_sid=bc0c2c",
+        "https://scontent-cdg4-1.cdninstagram.com/v/t50.2886-16/417436579_1080499526330758_215613097491880371_n.mp4?_nc_ht=scontent-cdg4-1.cdninstagram.com&_nc_cat=110&_nc_ohc=16IFgHVwS1MAX8eqTmD&edm=APU89FABAAAA&ccb=7-5&oh=00_AfC7bWvuHQFfzQLXSbs2em7A7V6zImhYPJetaU62G4wdkg&oe=65AA2570&_nc_sid=bc0c2c",
+        "https://scontent-cdg4-1.cdninstagram.com/v/t50.2886-16/10000000_212147611977710_627073631995185810_n.mp4?_nc_ht=scontent-cdg4-1.cdninstagram.com&_nc_cat=102&_nc_ohc=ievxXfm7KaAAX84H80b&edm=APU89FABAAAA&ccb=7-5&oh=00_AfAIC_3muZH7S2GTu3AYuKRBLxpygVDg-fxbZDenOL-aNA&oe=65AA1F21&_nc_sid=bc0c2c",
+        "https://scontent-cdg4-3.cdninstagram.com/v/t66.30100-16/320273308_1307870979832547_1157995225234008483_n.mp4?_nc_ht=scontent-cdg4-3.cdninstagram.com&_nc_cat=111&_nc_ohc=Jg0ePAl-HrwAX-Lf-fl&edm=APU89FABAAAA&ccb=7-5&oh=00_AfBNPVbfAGsDYDM6PCngivfSUlJL3dEnpLa65a-ob3NcfA&oe=65AA03C8&_nc_sid=bc0c2c",
+        "https://scontent-cdg4-2.cdninstagram.com/v/t66.30100-16/334658098_923339552051244_7629673561791266244_n.mp4?efg=e30&_nc_ht=scontent-cdg4-2.cdninstagram.com&_nc_cat=100&_nc_ohc=I2GvTqhxgskAX-wi23m&edm=APU89FABAAAA&ccb=7-5&oh=00_AfBJOMhTbxHRvcc4qQbBX5X0MQkuxhR1z4y7Qo29hAf_Nw&oe=65ACDFD0&_nc_sid=bc0c2c",
+        "https://scontent-cdg4-1.cdninstagram.com/v/t66.30100-16/120692422_2064749973904796_8359243380075642979_n.mp4?efg=e30&_nc_ht=scontent-cdg4-1.cdninstagram.com&_nc_cat=108&_nc_ohc=j60M2quJpPYAX9TdmxW&edm=APU89FABAAAA&ccb=7-5&oh=00_AfCYyltOUOV_KRTSjEU9tmEYrcXPTw1n5QS3CjYXkMHY3Q&oe=65ADD74E&_nc_sid=bc0c2c",
+        "https://scontent-cdg4-3.cdninstagram.com/v/t66.30100-16/121441441_1449427122643924_792112154193955508_n.mp4?_nc_ht=scontent-cdg4-3.cdninstagram.com&_nc_cat=104&_nc_ohc=TMRNyja9iBUAX_uHz5R&edm=APU89FABAAAA&ccb=7-5&oh=00_AfA0_98MsfkQ46gmXiddeNRAwk4mjjdGritJ9Wb9Xyg_8g&oe=65AA3F4A&_nc_sid=bc0c2c",
     ]
     response = requests.get(urls[int(index)])
     with open("frontend/tiktok-clone/src/temp/old_video.mp4", "wb") as file:

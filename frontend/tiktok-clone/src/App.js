@@ -12,10 +12,10 @@ function App() {
     "http://127.0.0.1:8000/videos/2",
     "http://127.0.0.1:8000/videos/3",
     "http://127.0.0.1:8000/videos/4",
-    "http://127.0.0.1:8000/videos/5",
+    // "http://127.0.0.1:8000/videos/5",
     "http://127.0.0.1:8000/videos/6",
     "http://127.0.0.1:8000/videos/7",
-    "http://127.0.0.1:8000/videos/8",
+    // "http://127.0.0.1:8000/videos/8",
   ];
 
   const videoObjects = videoUrls.map((url, index) => ({

@@ -54,9 +54,6 @@ const VideoCard = ({
       </video>
       <div className="video-content" onClick={togglePlay}>
         <p>@{author}</p>
-        <p>
-          Video by <a href={authorLink}>{author} </a> on Pexel
-        </p>
       </div>
     </div>
   );

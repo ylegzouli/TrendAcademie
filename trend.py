@@ -169,27 +169,43 @@ print(len(news))
 
 news = run_trend_for_list_of_news(news)
 
-#%%
-
-from news_to_csv import news_to_csv
-
-news_to_csv(news)
 
 #%%
+# import pickle 
+# print(len(news))
 
-# products = []
-# brands = []
-# for new in news:
-#     products.extend(new.product_list)
-#     brands.extend(new.brand_list)
+# print("Serialize and save the list using pickle")
+# with open('data/news_data.pkl', 'wb') as file:
+#     pickle.dump(news, file)
 
-# print(products)
-# print(brands)
-# print(len(products))
-# print(len(brands))
+#%%
+# news_to_csv(news)
+import pickle 
+with open('data/news_data.pkl', 'rb') as file:
+    loaded_news_list = pickle.load(file)
 
+#%%
+print(loaded_news_list[0])
+
+
+#%%
+from ranking import news_to_product_occurence, news_to_brand_occurence
+
+df_product = news_to_product_occurence(loaded_news_list[0])
+
+#%%
+
+df_brand = news_to_brand_occurence(loaded_news_list[0])
+
+#%%
+
+print(df_product)
 
 # %%
+
+for new in loaded_news_list[0]:
+    if new.is_video:
+        print(new.video_url)
 
 # for product in products:
 #     print(product)
