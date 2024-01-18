@@ -28,6 +28,12 @@ def mock_news(n: int) -> List[News]:
         'KissKiss Liplift Lipstick Primer',
         'Benefiance NutriPerfect Night Cream'
     ]
+    brand_names = [
+        "MAKEUP BY MARIO",
+        "L'Occitane",
+        "Laura Mercier",
+        "NARS"
+    ]
     for _ in range(n):
         news = News(
             idx=fake.random_int(),
@@ -42,7 +48,7 @@ def mock_news(n: int) -> List[News]:
             video_view_count=fake.random_int(min=0, max=10000) if fake.boolean() else None,
             publishedAt=fake.date_time(),
             product_list=[fake.random_element(product_names) for _ in range(2)],
-            brand_list=[fake.word() for _ in range(2)]
+            brand_list=[fake.random_element(brand_names) for _ in range(2)]
         )
         news_list.append(news)
     return news_list
