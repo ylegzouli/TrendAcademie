@@ -79,6 +79,9 @@
       </div>
     {/each}
 </div>
+<br>
+<!-- <h1 class="text-lg" style="font-family:'Gill Sans'">Brief</h1> -->
+<textarea class="textarea textarea-bordered" placeholder="Brief"></textarea>
 
 </div>
 
@@ -119,7 +122,7 @@ h1{
 }
 
 .carousel-item img {
-    width: 150px; /* Adjust width as needed */
+    width: 140px; /* Adjust width as needed */
     height: auto; 
     display: block;
 }     
@@ -133,6 +136,12 @@ h1{
     margin-left: 20px; /* Left margin */
     margin-right: 20px; /* Right margin */
     /* Adjust the values as needed */
+}
+
+.textarea {
+    width: 100%; /* This will make the textarea take full width of its container */
+    height: 200px; /* Set the height in pixels as per your preference */
+    /* Add any other styles you need */
 }
 
 

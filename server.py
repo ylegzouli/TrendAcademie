@@ -66,7 +66,6 @@ def get_home_data(time):
         product_image = get_product_image(name)  # Assuming get_image(name) returns the image URL
         product_mention = df[df['product_name'] == name]["occurrences"].values[0]
         product_likes = get_cumulative_likes(name, news) / 1000
-        print(product_likes)
         product = {
             "product_id": str(product_id),
             "product_name": name,
