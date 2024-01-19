@@ -135,7 +135,7 @@ h1{
 }
 
 .carousel-item img {
-    width: 140px; /* Adjust width as needed */
+    width: 250px; /* Adjust width as needed */
     height: auto;
     display: block;
 }
