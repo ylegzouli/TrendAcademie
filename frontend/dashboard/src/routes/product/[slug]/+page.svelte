@@ -22,13 +22,15 @@
     
     <div class="product-container">
       <div class="product-info">
-        <h2>Drunk Elephant</h2>
         <p>Top AestheticD-Bronzi™ - Gouttes Soleil Antipollution</p>
-        <p><strong>#2 Jour, #2 Semaine, #3 Mois</strong></p>
+        <h2><strong>Drunk Elephant</strong></h2>
+        <br>
+        <p>#2 Jour, #2 Semaine, #3 Mois</p>
         <p>Vu chez @PatrickTa</p>
         <p>Skincare</p>
         <p class="out-of-stock">Out Of Stock</p>
         <p>Vegan, Sans Silicone</p>
+        <br>
       </div>
       <div class="product-image">
         <!-- Replace with your actual image path -->
@@ -54,6 +56,7 @@
     margin-top: 20px; /* Top margin */
     margin-left: 20px; /* Left margin */
     margin-right: 20px; /* Right margin */
+    font-family: 'Gill Sans';
   }
 
   .product-container {
@@ -61,7 +64,7 @@
     justify-content: space-between;
     align-items: center;
     /* border: 1px solid #000; */
-    padding: 10px;
+    padding: 20px;
     margin-bottom: 20px;
   }
   .product-info {
@@ -80,7 +83,7 @@
   }
   .out-of-stock {
     color: red;
-    font-weight: bold;
+    /* font-weight: bold; */
   }
   .comparable-products {
     display: flex;
