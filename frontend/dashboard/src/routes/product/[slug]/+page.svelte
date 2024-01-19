@@ -10,31 +10,43 @@
 
     onDestroy(unsubscribe);
 
-    // type ProductData = {
-    //     name: string
-    //     brand: string
-    //     image: string // link
-    //     description: string
-    //     influencer: string
-    //     in_stock: string // bool
-    //     similar: [string]
-    //     compatible: [string]
-    //     categories: [string]
-    //     highlights: [string]
-    //     likes: string
-    //     mentions: string
-    //     // rank (?)
-    // }
+    type ProductData = {
+        name: string
+        brand: string
+        image: string // link
+        description: string
+        influencer: string
+        in_stock: string // bool
+        similar: string[]
+        compatible: string[]
+        categories: string[]
+        highlights: string[]
+        likes: string
+        mentions: string
+        // rank (?)
+    }
 
-    // let productData: productData
-    let productData: any
+    let productData: ProductData = {
+        name: '',
+        brand: '',
+        image: '',
+        description: '',
+        influencer: '',
+        in_stock: '',
+        similar: [],
+        compatible: [],
+        categories: [],
+        highlights: [],
+        likes: '',
+        mentions: '',
+    }
 
     async function init() {
         try {
             const response = await axios.get("http://localhost:8000/product/" + slug)
             console.log('init success')
             console.log(response.data)
-            productData = response.data
+            productData = {...productData, ...response.data}
         } catch (e) {
             console.log('init failure')
             console.log(e)
@@ -66,38 +78,53 @@
 
     <div class="product-container">
       <div class="product-info">
-        <p>{productData?.name}</p>
-        <h2><strong>{productData?.brand}</strong></h2>
+        <p>{productData.name}</p>
+        <h2><strong>{productData.brand}</strong></h2>
         <br>
         <p>#2 Jour, #2 Semaine, #3 Mois</p>
         <p>Vu chez @PatrickTa</p>
-        <p>Category: {productData?.highlights}</p>
+        <p>Category: {productData.highlights}</p>
         <p class="in-stock">In Stock</p>
         <p>Highlights: ""</p>
-        <p>Description: {productData?.description}</p>
+        <p>Description: {productData.description}</p>
         <br>
         <div class="stat-title">Media Likes</div>
-        <div class="stat-value text-primary">{productData?.likes}K</div>
+        <div class="stat-value text-primary">{productData.likes}K</div>
         <div class="stat-title">Media Mentions</div>
-        <div class="stat-value text-primary">{productData?.mentions}</div>
+        <div class="stat-value text-primary">{productData.mentions}</div>
       </div>
       <div class="product-image">
-        <!-- <img src={productData?.image} alt="ProductImage"> -->
-
         <div class="card w-96 bg-base-100 shadow-xl">
-            <figure><img src={productData?.image} alt="Shoes" /></figure>
+            <figure><img src={productData.image} alt="ProductImage" /></figure>
             <div class="card-body">
-              <h2 class="card-title">{productData?.name}</h2>
-              <p>{productData?.description}</p>
+              <h2 class="card-title">{productData.name}</h2>
+              <p>{productData.description}</p>
               <div class="card-actions justify-end">
               </div>
             </div>
           </div>
       </div>
-  </div>
+    </div>
 
-    <h3>Produits comparables</h3>
+    <h3>Similar Products</h3>
 
+    <div class="carousel rounded-box">
+        {#each compatible as compatible}
+          <div class="carousel-item">
+            <a href="product/0">
+                <div class="card w-96 bg-base-100 shadow-xl">
+                    <figure><img src={compatible} alt="ProductImage" /></figure>
+                    <div class="card-body">
+                      <div class="card-actions justify-end">
+                      </div>
+                    </div>
+                </div>
+            </a>
+          </div>
+        {/each}
+    </div>
+
+    <h3>Similar Products</h3>
 
     <div class="carousel rounded-box">
         {#each compatible as compatible}
