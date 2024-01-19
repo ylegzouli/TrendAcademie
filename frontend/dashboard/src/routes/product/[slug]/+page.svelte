@@ -34,7 +34,7 @@
       </div>
       <div class="product-image">
         <!-- Replace with your actual image path -->
-        <img src="../{slug}.webp" alt="ProductImage">
+        <img src="../sephora1.webp" alt="ProductImage">
       </div>
     </div>
     

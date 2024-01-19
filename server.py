@@ -61,14 +61,18 @@ def get_home_data(time):
     product_names = df['product_name'].tolist()
 
 
+
     products = []
     for name in product_names:
         product_id = get_product_id(name)  # Assuming get_id(name) returns the product id
         product_image = get_product_image(name)  # Assuming get_image(name) returns the image URL
+        product_mention = df[df['product_name'] == name]["occurrences"].values[0]
+        # print(product_mention)
         product = {
             "product_id": str(product_id),
             "product_name": name,
-            "product_image": product_image
+            "product_image": product_image,
+            "product_mentions": str(product_mention*4)
         }
         products.append(product)
 
@@ -77,4 +81,7 @@ def get_home_data(time):
         "brands": [],
     }
 
+# %%
+
+# test = get_home_data(0)
 # %%
