@@ -56,6 +56,7 @@
 </script>
 
 <div class="main-container">
+
     <!-- <div class="header">SEPHORA</div> -->
     <div class="navbar rounded-box" style="background-color: white;">
         <div class="flex justify-center w-full title" style="font-family: 'Gill Sans'">
@@ -119,9 +120,9 @@
 <style>
 
   .main-container {
-    margin-top: 20px; /* Top margin */
-    margin-left: 20px; /* Left margin */
-    margin-right: 20px; /* Right margin */
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
     /* font-family: 'Gill Sans'; */
   }
 
@@ -171,7 +172,7 @@
 }
 
 .carousel-item img {
-    width: 140px; /* Adjust width as needed */
+    width: 140px;
     height: auto;
     display: block;
 }
