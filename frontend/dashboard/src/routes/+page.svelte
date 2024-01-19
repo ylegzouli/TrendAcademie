@@ -1,18 +1,40 @@
-<script>
+<script lang="ts">
+    import axios from "axios";
+    import { onMount } from "svelte";
 
-    function getBasename(filename) {
-        return filename.split('.').slice(0, -1).join('.');
+    type Product = {
+        product_id: string
+        product_name: string
+        product_image: string
+    };
+
+    type Brand = {
+        brand_id: string
+        brand_name: string
+        brand_image: string
+    };
+
+    let brands: Brand[] = [];
+    let products: Product[] = [];
+
+    async function init() {
+        try {
+            const response = await axios.get('http://localhost:8000/home/foo')
+            console.log('init success')
+            brands = response.data.brands
+            products = response.data.products
+            console.log(brands)
+            console.log(products)
+        } catch (e) {
+            console.log('init failure')
+            console.log(e)
+        }
     }
 
-    const images = [
-        "sephora0.webp",
-        "sephora1.webp",
-        "sephora2.webp",
-        "sephora3.webp",
-        "sephora4.webp"
-    ]
+    onMount(init);
 
 </script>
+
 <div class="main-container">
 
 <div class="navbar rounded-box" style="background-color: white;">
@@ -36,21 +58,16 @@
 <h1 class="text-lg" style="font-family:'Gill Sans'">TOP PRODUCTS</h1>
 
 <div class="carousel rounded-box">
-    {#each images as image}
-        <a href="product/{getBasename(image)}" class="carousel-item">
-            <img src={image} alt="foo" />
+    {#each products as product}
+        <a href="product/{product.product_id}" class="carousel-item">
+            <img src={product.product_image} alt="foo" />
         </a>
     {/each}
 </div>
 
-<h1 class="text-lg" style="font-family:'Gill Sans'">TOP BRANDS</h1>
-<div class="carousel rounded-box">
-  {#each images as image}
-      <a href="product/{getBasename(image)}" class="carousel-item">
-          <img src={image} alt="foo" />
-      </a>
-  {/each}
-</div>
+<br>
+<br>
+<br>
 
 </div>
 
