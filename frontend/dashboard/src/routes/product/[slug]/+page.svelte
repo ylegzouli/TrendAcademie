@@ -6,7 +6,6 @@
     let slug: any;
     const unsubscribe = page.subscribe(({ params }) => {
         slug = params.slug;
-        console.log('slug', slug)
     });
 
     onDestroy(unsubscribe);
@@ -46,9 +45,6 @@
 
 </script>
 
-<h1>{slug}</h1>
-
-
 <div class="main-container">
     <!-- <div class="header">SEPHORA</div> -->
     <div class="navbar rounded-box" style="background-color: white;">
@@ -75,9 +71,19 @@
         <div class="stat-value text-primary">{productData?.mentions}</div>
       </div>
       <div class="product-image">
-        <img src={productData?.image} alt="ProductImage">
+        <!-- <img src={productData?.image} alt="ProductImage"> -->
+
+        <div class="card w-96 bg-base-100 shadow-xl">
+            <figure><img src={productData?.image} alt="Shoes" /></figure>
+            <div class="card-body">
+              <h2 class="card-title">{productData?.name}</h2>
+              <p>{productData?.description}</p>
+              <div class="card-actions justify-end">
+              </div>
+            </div>
+          </div>
       </div>
-    </div>
+  </div>
 
     <h3>Produits comparables</h3>
 
@@ -97,7 +103,7 @@
     margin-top: 20px; /* Top margin */
     margin-left: 20px; /* Left margin */
     margin-right: 20px; /* Right margin */
-    font-family: 'Gill Sans';
+    /* font-family: 'Gill Sans'; */
   }
 
   .product-container {
@@ -118,7 +124,7 @@
     text-align: right;
     margin-left: 50px;
   }
-  .product-image img {
+  .product-image figure img {
     max-width: 100%;
     height: auto;
   }
