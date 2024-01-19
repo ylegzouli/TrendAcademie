@@ -43,6 +43,16 @@
 
     onMount(init);
 
+    let compatible = [
+        "https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg",
+        "https://daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.jpg",
+        "https://daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg",
+        "https://daisyui.com/images/stock/photo-1494253109108-2e30c049369b.jpg",
+        "https://daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.jpg",
+        "https://daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg",
+        "https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg"
+    ]
+
 </script>
 
 <div class="main-container">
@@ -87,15 +97,24 @@
 
     <h3>Produits comparables</h3>
 
-    <div class="comparable-products">
-      <div class="product">
-        <img src="../sephora0.webp" alt="Nivea Creme SPF 50">
-        <p>Nivea Creme SPF 50</p>
-        <!-- <p>En Stock</p> -->
-      </div>
-      <!-- Repeat for the other products -->
+
+    <div class="carousel rounded-box">
+        {#each compatible as compatible}
+          <div class="carousel-item">
+            <a href="product/0">
+                <div class="card w-96 bg-base-100 shadow-xl">
+                    <figure><img src={compatible} alt="Shoes" /></figure>
+                    <div class="card-body">
+                      <div class="card-actions justify-end">
+                      </div>
+                    </div>
+                </div>
+            </a>
+          </div>
+        {/each}
     </div>
-  </div>
+
+</div>
 
 <style>
 
@@ -132,14 +151,32 @@
     color: rgb(62, 209, 36);
     /* font-weight: bold; */
   }
-  .comparable-products {
+
+.carousel {
+    /* border: 1px solid #000; Add border to the entire carousel */
+    padding: 10px; /* Add padding inside the carousel */
+    margin: 0 auto; /* Center the carousel if needed */
+    margin-bottom: 10px; /* Add bottom margin to the h1 tag */
     display: flex;
-    justify-content: space-between;
-  }
-  .comparable-products .product {
-    border: 1px solid #000;
-    padding: 10px;
-    flex-basis: 30%;
-    margin-top: 10px;
-  }
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.carousel-item {
+    flex: 0 0 auto;
+    /* border: 1px solid #ccc; */
+    margin-right: 5px; /* Add space between items */
+    /* Additional styles for carousel item */
+    padding: 2px;
+}
+
+.carousel-item img {
+    width: 140px; /* Adjust width as needed */
+    height: auto;
+    display: block;
+}
+
+.carousel-item:last-child {
+    margin-right: 0; /* Remove right margin from the last item */
+}
   </style>
