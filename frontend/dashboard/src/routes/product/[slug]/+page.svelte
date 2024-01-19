@@ -1,16 +1,53 @@
-
-<script>
-    import { onDestroy } from 'svelte';
+<script lang="ts">
+    import { onDestroy, onMount } from 'svelte';
     import { page } from '$app/stores';
+    import axios from 'axios';
 
-    let slug;
+    let slug: any;
     const unsubscribe = page.subscribe(({ params }) => {
         slug = params.slug;
+        console.log('slug', slug)
     });
 
     onDestroy(unsubscribe);
+
+    // type ProductData = {
+    //     name: string
+    //     brand: string
+    //     image: string // link
+    //     description: string
+    //     influencer: string
+    //     in_stock: string // bool
+    //     similar: [string]
+    //     compatible: [string]
+    //     categories: [string]
+    //     highlights: [string]
+    //     likes: string
+    //     mentions: string
+    //     // rank (?)
+    // }
+
+    // let productData: productData
+    let productData: any
+
+    async function init() {
+        try {
+            const response = await axios.get("http://localhost:8000/product/" + slug)
+            console.log('init success')
+            console.log(response.data)
+            productData = response.data
+        } catch (e) {
+            console.log('init failure')
+            console.log(e)
+        }
+    }
+
+    onMount(init);
+
 </script>
-<!-- <h1>Product: {slug}</h1> -->
+
+<h1>{slug}</h1>
+
 
 <div class="main-container">
     <!-- <div class="header">SEPHORA</div> -->
@@ -19,25 +56,29 @@
           <div class="text-lg" style="font-size: 24px;">S E P H O R A</div>
         </div>
         </div><br>
-    
+
     <div class="product-container">
       <div class="product-info">
-        <p>Top AestheticD-Bronzi™ - Gouttes Soleil Antipollution</p>
-        <h2><strong>Drunk Elephant</strong></h2>
+        <p>{productData?.name}</p>
+        <h2><strong>{productData?.brand}</strong></h2>
         <br>
         <p>#2 Jour, #2 Semaine, #3 Mois</p>
         <p>Vu chez @PatrickTa</p>
-        <p>Skincare</p>
-        <p class="out-of-stock">Out Of Stock</p>
-        <p>Vegan, Sans Silicone</p>
+        <p>Category: {productData?.highlights}</p>
+        <p class="in-stock">In Stock</p>
+        <p>Highlights: ""</p>
+        <p>Description: {productData?.description}</p>
         <br>
+        <div class="stat-title">Media Likes</div>
+        <div class="stat-value text-primary">{productData?.likes}K</div>
+        <div class="stat-title">Media Mentions</div>
+        <div class="stat-value text-primary">{productData?.mentions}</div>
       </div>
       <div class="product-image">
-        <!-- Replace with your actual image path -->
-        <img src="../sephora1.webp" alt="ProductImage">
+        <img src={productData?.image} alt="ProductImage">
       </div>
     </div>
-    
+
     <h3>Produits comparables</h3>
 
     <div class="comparable-products">
@@ -81,8 +122,8 @@
     max-width: 100%;
     height: auto;
   }
-  .out-of-stock {
-    color: red;
+  .in-stock {
+    color: rgb(62, 209, 36);
     /* font-weight: bold; */
   }
   .comparable-products {
