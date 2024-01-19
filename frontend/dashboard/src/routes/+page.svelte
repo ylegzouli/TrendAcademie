@@ -60,7 +60,8 @@
 <div class="carousel rounded-box">
     {#each products as product}
       <div class="carousel-item">
-        <div class="card w-96 bg-base-100 shadow-xl">
+          <a href="product/{product.product_id}">
+          <div class="card w-96 bg-base-100 shadow-xl">
             <figure><img src={product.product_image} alt="Shoes" /></figure>
             <div class="card-body">
                 <div class="stat">
@@ -76,6 +77,7 @@
               </div>
             </div>
         </div>
+      </a>
       </div>
     {/each}
 </div>
