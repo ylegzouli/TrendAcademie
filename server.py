@@ -4,8 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from ranking import mock_products, mock_brands
 import requests
-from product import get_product_id, get_product_image
-from ranking import news_to_product_occurence
+from product import get_product_id, get_product_image, get_product_name, get_product_brand, get_product_description
+from ranking import news_to_product_occurence, get_cumulative_likes
 import pickle
 
 news = pickle.load(open("data/news_data.pkl", "rb"))[0]
@@ -59,20 +59,20 @@ def get_home_data(time):
 
     df = news_to_product_occurence(news)
     product_names = df['product_name'].tolist()
-
-
-
+    
     products = []
     for name in product_names:
         product_id = get_product_id(name)  # Assuming get_id(name) returns the product id
         product_image = get_product_image(name)  # Assuming get_image(name) returns the image URL
         product_mention = df[df['product_name'] == name]["occurrences"].values[0]
-        # print(product_mention)
+        product_likes = get_cumulative_likes(name, news) / 1000
+        print(product_likes)
         product = {
             "product_id": str(product_id),
             "product_name": name,
             "product_image": product_image,
-            "product_mentions": str(product_mention*4)
+            "product_mentions": str(product_mention*4),
+            "product_likes": str(product_likes)
         }
         products.append(product)
 
@@ -81,7 +81,31 @@ def get_home_data(time):
         "brands": [],
     }
 
-# %%
+@app.get("/product/{product_id}")
+def get_product(product_id):
+    product_id = int(product_id)
+    product_name = get_product_name(product_id)
+    product_image = get_product_image(product_name)
+    product_brand = get_product_brand(product_id)
+    product_description = get_product_description(product_id)
+    product_likes = get_cumulative_likes(product_name, news) / 1000
+    product_mentions = news_to_product_occurence(news)[news_to_product_occurence(news)['product_name'] == product_name]["occurrences"].values[0] * 4
+    
+    return {
+        "id": str(product_id),
+        "name": product_name,
+        "image": product_image,
+        "brand": product_brand,
+        "description": product_description,
+        "likes": str(product_likes),
+        "mentions": str(product_mentions),
 
-# test = get_home_data(0)
+        "in_stock": "In stock",
+        "influencer": "",
+        "similar": "",
+        "compatible": "",
+        "category": "",
+        "highlight": "",
+    }
+
 # %%

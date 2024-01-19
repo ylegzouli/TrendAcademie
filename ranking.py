@@ -87,6 +87,17 @@ def get_top_brands(df_brands: pd.DataFrame, n: int):
     top_brand_names = df_brands.head(n)['brand_name'].values
     return top_brand_names
 
+# Function to calculate cumulative likes for a product
+def get_cumulative_likes(product_name: str, news_list: List[News]) -> int:
+    total_likes = 0
+    for news in news_list:
+        if product_name in news.product_list:
+            total_likes += news.likes
+    if total_likes <= 0:
+        return 0
+    return total_likes
+
+
 def main():
     df_news = pd.read_csv('data/news.csv')
     df_sephora = pd.read_csv('data/sephora.csv')
