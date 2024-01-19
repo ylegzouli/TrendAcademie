@@ -1,18 +1,40 @@
-<script>
+<script lang="ts">
+    import axios from "axios";
+    import { onMount } from "svelte";
 
-    function getBasename(filename) {
-        return filename.split('.').slice(0, -1).join('.');
+    type Product = {
+        product_id: string
+        product_name: string
+        product_image: string
+    };
+
+    type Brand = {
+        brand_id: string
+        brand_name: string
+        brand_image: string
+    };
+
+    let brands: Brand[] = [];
+    let products: Product[] = [];
+
+    async function init() {
+        try {
+            const response = await axios.get('http://localhost:8000/home/foo')
+            console.log('init success')
+            brands = response.data.brands
+            products = response.data.products
+            console.log(brands)
+            console.log(products)
+        } catch (e) {
+            console.log('init failure')
+            console.log(e)
+        }
     }
 
-    const images = [
-        "sephora0.webp",
-        "sephora1.webp",
-        "sephora2.webp",
-        "sephora3.webp",
-        "sephora4.webp"
-    ]
+    onMount(init);
 
 </script>
+
 <div class="main-container">
 
 <div class="navbar rounded-box" style="background-color: white;">
@@ -36,10 +58,10 @@
 <h1 class="text-lg" style="font-family:'Gill Sans'">TOP PRODUCTS</h1>
 
 <div class="carousel rounded-box">
-    {#each images as image}
+    {#each products as product}
       <div class="carousel-item">
-          <a href="product/{getBasename(image)}">
-            <img src={image} alt="foo" />
+          <a href="product/{product.product_id}">
+            <img src={product.product_image} alt="foo" />
             <div class="stat">
               <div class="stat-figure text-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
@@ -56,17 +78,8 @@
     {/each}
 </div>
 
-<h1 class="text-lg" style="font-family:'Gill Sans'">TOP BRANDS</h1>
-<div class="carousel rounded-box">
-  {#each images as image}
-      <a href="product/{getBasename(image)}" class="carousel-item">
-          <img src={image} alt="foo" />
-      </a>
-
-  {/each}
 </div>
 
-</div>
 
 <style>
 

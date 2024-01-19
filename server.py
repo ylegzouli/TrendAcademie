@@ -1,5 +1,6 @@
 #%%
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from ranking import mock_products, mock_brands
 import requests
@@ -11,6 +12,15 @@ news = pickle.load(open("data/news_data.pkl", "rb"))[0]
 
 
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 @app.get("/")
 def read_root():
@@ -51,60 +61,20 @@ def get_home_data(time):
     product_names = df['product_name'].tolist()
 
 
-    products = {}
+    products = []
     for name in product_names:
         product_id = get_product_id(name)  # Assuming get_id(name) returns the product id
         product_image = get_product_image(name)  # Assuming get_image(name) returns the image URL
-
-        products[str(product_id)] = {
+        product = {
+            "product_id": str(product_id),
             "product_name": name,
             "product_image": product_image
         }
+        products.append(product)
 
     return {
         "products": products,
-        "brands": {},
+        "brands": [],
     }
-
-    # return {
-    #     "products": {
-    #         "0" : {
-    #             "product_name": "product_name_0",
-    #             "product_image": "product_image_0",
-    #         },
-    #         "1" : {
-    #             "product_name": "product_name_1",
-    #             "product_image": "product_image_1",
-    #         },
-    #         "2" : {
-    #             "product_name": "product_name_2",
-    #             "product_image": "product_image_2",
-    #         },
-    #         "3" : {
-    #             "product_name": "product_name_3",
-    #             "product_image": "product_image_3",
-    #         },
-           
-    #     },
-    #     "brands": {
-    #         "0" : {
-    #             "brand_name": "brand_name_0",
-    #             "brand_image": "brand_image_0",
-    #         },
-    #         "1" : {
-    #             "brand_name": "brand_name_1",
-    #             "brand_image": "brand_image_1",
-    #         },
-    #         "2" : {
-    #             "brand_name": "brand_name_2",
-    #             "brand_image": "brand_image_2",
-    #         },
-    #         "3" : {
-    #             "brand_name": "brand_name_3",
-    #             "brand_image": "brand_image_3",
-    #         },
-           
-    #     },
-    # }
 
 # %%
