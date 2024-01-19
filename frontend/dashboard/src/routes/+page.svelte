@@ -54,11 +54,9 @@
   </div>
 
 <br>
-<br>
-<br>
 
 <h1 class="text-lg" style="font-family:'Gill Sans'">TOP PRODUCTS</h1>
-
+<br>
 <div class="carousel rounded-box">
     {#each products as product}
       <div class="carousel-item">
@@ -70,9 +68,9 @@
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
                   </div>
                   <div class="stat-title">Media Likes</div>
-                  <div class="stat-value text-primary">{product.product_likes}K</div>
+                  <div class="stat-value">{product.product_likes}K</div>
                   <div class="stat-title">Media Mentions</div>
-                  <div class="stat-value text-primary">{product.product_mentions}</div>
+                  <div class="stat-value">{product.product_mentions}</div>
                 </div>
               <div class="card-actions justify-end">
               </div>
@@ -83,8 +81,6 @@
 </div>
 <br>
 
-<br>
-<br>
 <br>
 
 <!-- <h1 class="text-lg" style="font-family:'Gill Sans'">Brief</h1> -->
@@ -98,13 +94,13 @@
     /* margin-bottom: 1px; Add bottom margin to the SEPHORA title div */
 /* } */
 
-.stat-value.text-primary {
-    color: black !important;
-    font-family: 'Gill Sans';
+.stat-value {
+    color: rgb(90, 88, 88) !important;
+    /* font-family: 'Gill Sans'; */
 }
 
 .stat-figure svg {
-    stroke: rgb(173, 120, 129) !important;
+    stroke: rgb(199, 0, 33) !important;
 }
 
 .timeline-select-container {
@@ -122,7 +118,7 @@ h1{
     /* border: 1px solid #000; Add border to the entire carousel */
     padding: 10px; /* Add padding inside the carousel */
     margin: 0 auto; /* Center the carousel if needed */
-    margin-bottom: 10px; /* Add bottom margin to the h1 tag */
+    /* margin-bottom: 10px; Add bottom margin to the h1 tag */
     display: flex;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
