@@ -56,9 +56,7 @@
 
     <div class="navbar bg-base-100">
         <div class="navbar-start">
-            <a href="/">
-                <img src={arrow} alt="back icon"/>
-            </a>
+
         </div>
         <div class="navbar-center">
           <div class="text-lg" style="font-size: 24px;">S E P H O R A</div>

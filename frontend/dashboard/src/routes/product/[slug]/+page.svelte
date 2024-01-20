@@ -127,21 +127,41 @@
                   </div>
                 </div>
               </div>
-              <div class="stat-title">Share by</div>
+              <div class="stat-title">Most share by</div>
               {#if productData?.influencer}
               {#each productData.influencer.slice(0, 3) as influencer, index}
                   <span style="color:cornflowerblue">@{influencer}</span>
               {/each}
-          {/if}
+              {/if}
             </div>
           </div>
+          <br>
+        <h1 class="text-lg" style="font-family:'Gill Sans'">Details :</h1>
 
-          <div></div>
+          <div class="stats shadow" style="overflow: hidden; margin-top: 20px">
 
+            <div class="stat stat-container">
+              <img src="/instagram.png" alt="Shoes" width="50" height="50"/>
+                <div class="stat-value text-primary">{productData?.likes}K</div>
+            </div>
+
+            <div class="stat stat-container">
+              <img src="/tiktok.webp" alt="Shoes" width="50" height="50"/>
+                <div class="stat-value text-primary">0.0K</div>
+            </div>
+
+            <div class="stat stat-container">
+              <img src="/youtube.webp" alt="Shoes" width="50" height="50"/>
+                <div class="stat-value text-primary">0.0K</div>
+            </div>
+
+          </div>
         </div>
       </div>
 
   </div>
+
+
 
     <h1 class="text-lg" style="font-family:'Gill Sans'">Similar Products</h1>
 
@@ -185,6 +205,16 @@
 
 <style>
 
+.stat-container {
+    display: flex;       /* This enables Flexbox */
+    align-items: center; /* This aligns items vertically in the center */
+    gap: 30px;           /* This adds some space between the image and the text */
+}
+
+.stat-value {
+    margin: 0; /* You might want to reset margin for alignment, adjust as needed */
+}
+
   .main-container {
     margin-top: 20px; /* Top margin */
     margin-left: 20px; /* Left margin */
@@ -200,14 +230,6 @@
     padding: 20px; */
     margin-bottom: 50px;
   }
-
-.product-info, .product-image {
-  flex: 1 !important ;/* Equal flex grow and shrink */
-  flex-basis: 0 !important; /* Starting width */
-  box-sizing: border-box !important; /* Include padding and border in the element's total width and height */
-  padding: 10px !important;
-  max-width: 50% !important; /* Explicitly set max-width to ensure equal width */
-}
 
 .timeline-select-container {
     display: flex;
