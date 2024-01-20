@@ -28,10 +28,12 @@
 
     // let productData: productData
     let productData: any
+    let selectedTimeline: string = 'Month'; // Default value
 
-    async function init() {
+    async function init(timeline: string) {
         try {
-            const response = await axios.get("http://localhost:8000/product/" + slug)
+            const response = await axios.get("http://localhost:8000/product/" + timeline.toLowerCase() + "/" + slug)
+            
             console.log('init success')
             console.log(response.data)
             productData = response.data
@@ -41,7 +43,14 @@
         }
     }
 
-    onMount(init);
+        // Reactive statement to watch for changes in the selected timeline
+        $: {
+        if (selectedTimeline) {
+            init(selectedTimeline);
+        }
+    }
+
+    onMount(init(selectedTimeline));
 
     let compatible = [
         "https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg",
@@ -64,7 +73,7 @@
         </div><br>
 
         <div class="timeline-select-container">
-          <select class="select select-bordered select-sm max-w-xs">
+          <select class="select select-bordered select-sm max-w-xs" bind:value={selectedTimeline}>
             <option selected>Month</option>
             <option>Week</option>
             <option>Day</option>
@@ -105,12 +114,10 @@
                 <div class="avatar online">
                   <div class="w-16 rounded-full">
                     <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                    <!-- <img src=rank.png alt=foo/> -->
                   </div>
                 </div>
               </div>
               <div class="stat-title">Share by</div>
-              <!-- <div class="stat-value">{productData?.influencer}</div> -->
               {#if productData?.influencer}
               {#each productData.influencer.slice(0, 3) as influencer, index}
                   <span style="color:cornflowerblue">@{influencer}</span>
@@ -124,36 +131,6 @@
         </div>
       </div>
       
-      <!-- <div class="product-info card w-96 bg-base-100 shadow-xl">
-        <p>{productData?.name}</p>
-        <h2><strong>{productData?.brand}</strong></h2>
-        <br>
-        <p>#2 Jour, #2 Semaine, #3 Mois</p>
-        <p>Vu chez @PatrickTa</p>
-        <p>Category: {productData?.highlights}</p>
-        <p class="in-stock">In Stock</p>
-        <p>Highlights: ""</p>
-        <p>Description: {productData?.description}</p>
-        <br>
-        <div class="stat-title">Media Likes</div>
-        <div class="stat-value text-primary">{productData?.likes}K</div>
-        <div class="stat-title">Media Mentions</div>
-        <div class="stat-value text-primary">{productData?.mentions}</div>
-      </div> -->
-
-
-      <!-- <div class="product-image">
-        <div class="card w-96 bg-base-100 shadow-xl">
-            <figure><img src={productData?.image} alt="Shoes" /></figure>
-            <div class="card-body">
-              <h2 class="card-title">{productData?.name}</h2>
-              <p>{productData?.description}</p>
-              <div class="card-actions justify-end">
-              </div>
-            </div>
-          </div>
-      </div> -->
-  
   </div>
 
     <h1 class="text-lg" style="font-family:'Gill Sans'">Similar Products</h1>

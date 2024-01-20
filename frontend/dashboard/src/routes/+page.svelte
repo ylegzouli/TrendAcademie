@@ -19,10 +19,11 @@
 
     let brands: Brand[] = [];
     let products: Product[] = [];
+    let selectedTimeline: string = 'Month'; // Default value
 
-    async function init() {
+    async function init(timeline: string) {
         try {
-            const response = await axios.get('http://localhost:8000/home/foo')
+            const response = await axios.get("http://localhost:8000/home/" + timeline.toLowerCase())
             console.log('init success')
             brands = response.data.brands
             products = response.data.products
@@ -34,7 +35,14 @@
         }
     }
 
-    onMount(init);
+    // Reactive statement to watch for changes in the selected timeline
+    $: {
+        if (selectedTimeline) {
+            init(selectedTimeline);
+        }
+    }
+
+    onMount(init(selectedTimeline));
 
     // Function to truncate product name
     function displayProductName(productName: string): string {
@@ -52,7 +60,7 @@
   </div><br>
 
   <div class="timeline-select-container">
-  <select class="select select-bordered select-sm max-w-xs">
+  <select class="select select-bordered select-sm max-w-xs" bind:value={selectedTimeline}>
     <option selected>Month</option>
     <option>Week</option>
     <option>Day</option>
@@ -96,15 +104,6 @@
 
 <br>
 <textarea class="textarea textarea-bordered" placeholder="Brief"></textarea>
-<!-- <div tabindex="0" class="collapse bg-base-200"> 
-  <div class="collapse-title text-xl font-medium">
-    
-  </div>
-  <div class="collapse-content"> 
-  </div>
-</div> -->
-<!-- <h1 class="text-lg" style="font-family:'Gill Sans'">Brief</h1> -->
-
 </div>
 
 <style>
@@ -132,7 +131,6 @@ h1{
     /* border: 1px solid #000; */
     padding: 10px; /* Add padding inside the carousel */
     margin: 0 auto; /* Center the carousel if needed */
-    /* margin-bottom: 10px; Add bottom margin to the h1 tag */
     display: flex;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -140,9 +138,7 @@ h1{
 
 .carousel-item {
     flex: 0 0 auto;
-    /* border: 1px solid #ccc; */
     margin-right: 5px; /* Add space between items */
-    /* Additional styles for carousel item */
     padding: 2px;
 }
 
@@ -160,13 +156,11 @@ h1{
     margin-top: 20px; /* Top margin */
     margin-left: 20px; /* Left margin */
     margin-right: 20px; /* Right margin */
-    /* Adjust the values as needed */
 }
 
 .textarea {
     width: 100%; /* This will make the textarea take full width of its container */
     height: 200px; /* Set the height in pixels as per your preference */
-    /* Add any other styles you need */
 }
 
 .top-title {
