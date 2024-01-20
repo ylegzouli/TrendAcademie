@@ -4,11 +4,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from ranking import mock_products, mock_brands
 import requests
-from product import get_product_id, get_product_image, get_product_name, get_product_brand, get_product_description, get_influencer
+from product import get_product_id, get_product_image, get_product_name, get_product_brand, get_product_description, get_influencer, process_news
 from ranking import news_to_product_occurence, get_cumulative_likes, get_cumulative_comments
 import pickle
 
-news = pickle.load(open("data/news_data.pkl", "rb"))[0]
+news_all = pickle.load(open("data/news_data.pkl", "rb"))[0]
+
+news_month, news_week, news_day = process_news(news_all)
 
 
 app = FastAPI()
@@ -56,6 +58,12 @@ def get_video(index):
 #%%
 @app.get("/home/{time}")
 def get_home_data(time):
+    if time == "month":
+        news = news_month
+    elif time == "week":
+        news = news_week
+    elif time == "day":
+        news = news_day
 
     df = news_to_product_occurence(news)
     product_names = df['product_name'].tolist()
@@ -64,17 +72,21 @@ def get_home_data(time):
     for name in product_names:
         product_id = get_product_id(name)  # Assuming get_id(name) returns the product id
         product_image = get_product_image(name)  # Assuming get_image(name) returns the image URL
-        product_mention = df[df['product_name'] == name]["occurrences"].values[0]
         product_likes = get_cumulative_likes(name, news) / 1000
         product_brand = get_product_brand(product_id)
+        try:
+            product_mention = df[df['product_name'] == name]["occurrences"].values[0]
+        except:
+            product_mention = 0
+        
         product = {
-            "product_id": str(product_id),
-            "product_name": name,
-            "product_image": product_image,
-            "product_mentions": str(product_mention*4),
-            "product_likes": str(product_likes),
-            "product_brand": product_brand,
-        }
+                "product_id": str(product_id),
+                "product_name": name,
+                "product_image": product_image,
+                "product_mentions": str(product_mention*4),
+                "product_likes": str(product_likes),
+                "product_brand": product_brand,
+            }
         products.append(product)
 
     return {
@@ -82,17 +94,26 @@ def get_home_data(time):
         "brands": [],
     }
 
-@app.get("/product/{product_id}")
-def get_product(product_id):
+@app.get("/product/{time}/{product_id}")
+def get_product(time, product_id):
+    if time == "month":
+        news = news_month
+    elif time == "week":
+        news = news_week
+    elif time == "day":
+        news = news_day
     product_id = int(product_id)
     product_name = get_product_name(product_id)
     product_image = get_product_image(product_name)
     product_brand = get_product_brand(product_id)
     product_description = get_product_description(product_id)
     product_likes = get_cumulative_likes(product_name, news) / 1000
-    product_mentions = news_to_product_occurence(news)[news_to_product_occurence(news)['product_name'] == product_name]["occurrences"].values[0] * 4
     product_comment = get_cumulative_comments(product_name, news) / 1000
     product_influencer = get_influencer(product_id, news)
+    try:
+        product_mentions = news_to_product_occurence(news)[news_to_product_occurence(news)['product_name'] == product_name]["occurrences"].values[0] * 4
+    except:
+        product_mentions = 0
     return {
         "id": str(product_id),
         "name": product_name,
