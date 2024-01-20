@@ -147,7 +147,7 @@ h1{
 }
 
 .carousel-item img {
-    width: 200px; /* Adjust width as needed */
+    width: 250px;
     height: auto;
     display: block;
 }
@@ -157,16 +157,14 @@ h1{
 }
 
 .main-container {
-    margin-top: 20px; /* Top margin */
-    margin-left: 20px; /* Left margin */
-    margin-right: 20px; /* Right margin */
-    /* Adjust the values as needed */
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .textarea {
     width: 100%; /* This will make the textarea take full width of its container */
     height: 200px; /* Set the height in pixels as per your preference */
-    /* Add any other styles you need */
 }
 
 .top-title {
