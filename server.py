@@ -4,8 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from ranking import mock_products, mock_brands
 import requests
-from product import get_product_id, get_product_image, get_product_name, get_product_brand, get_product_description
-from ranking import news_to_product_occurence, get_cumulative_likes
+from product import get_product_id, get_product_image, get_product_name, get_product_brand, get_product_description, get_influencer
+from ranking import news_to_product_occurence, get_cumulative_likes, get_cumulative_comments
 import pickle
 
 news = pickle.load(open("data/news_data.pkl", "rb"))[0]
@@ -66,12 +66,14 @@ def get_home_data(time):
         product_image = get_product_image(name)  # Assuming get_image(name) returns the image URL
         product_mention = df[df['product_name'] == name]["occurrences"].values[0]
         product_likes = get_cumulative_likes(name, news) / 1000
+        product_brand = get_product_brand(product_id)
         product = {
             "product_id": str(product_id),
             "product_name": name,
             "product_image": product_image,
             "product_mentions": str(product_mention*4),
-            "product_likes": str(product_likes)
+            "product_likes": str(product_likes),
+            "product_brand": product_brand,
         }
         products.append(product)
 
@@ -89,7 +91,8 @@ def get_product(product_id):
     product_description = get_product_description(product_id)
     product_likes = get_cumulative_likes(product_name, news) / 1000
     product_mentions = news_to_product_occurence(news)[news_to_product_occurence(news)['product_name'] == product_name]["occurrences"].values[0] * 4
-    
+    product_comment = get_cumulative_comments(product_name, news) / 1000
+    product_influencer = get_influencer(product_id, news)
     return {
         "id": str(product_id),
         "name": product_name,
@@ -98,9 +101,10 @@ def get_product(product_id):
         "description": product_description,
         "likes": str(product_likes),
         "mentions": str(product_mentions),
+        "comment": str(product_comment),
 
         "in_stock": "In stock",
-        "influencer": "",
+        "influencer": product_influencer,
         "similar": "",
         "compatible": "",
         "category": "",

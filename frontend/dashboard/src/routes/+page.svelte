@@ -8,6 +8,7 @@
         product_image: string
         product_mentions: string
         product_likes: string
+        product_brand: string
     };
 
     type Brand = {
@@ -35,6 +36,11 @@
 
     onMount(init);
 
+    // Function to truncate product name
+    function displayProductName(productName: string): string {
+        return productName.length > 27 ? `${productName.substring(0, 27)} ...` : productName;
+    }
+
 </script>
 
 <div class="main-container">
@@ -46,7 +52,7 @@
   </div><br>
 
   <div class="timeline-select-container">
-  <select class="select select-bordered select-xs max-w-xs">
+  <select class="select select-bordered select-sm max-w-xs">
     <option selected>Month</option>
     <option>Week</option>
     <option>Day</option>
@@ -55,24 +61,29 @@
 
 <br>
 
-<h1 class="text-lg" style="font-family:'Gill Sans'">TOP PRODUCTS</h1>
+
+<h1 class="text-lg top-title" style="font-family:'Gill Sans'">TOP PRODUCTS</h1>
 <br>
 <div class="carousel rounded-box">
     {#each products as product}
       <div class="carousel-item">
           <a href="product/{product.product_id}">
           <div class="card w-96 bg-base-100 shadow-xl">
-            <figure><img src={product.product_image} alt="Shoes" /></figure>
+              <figure><img src={product.product_image} alt="Shoes" /></figure>
             <div class="card-body">
+              <p>{product?.product_brand}</p>
+              <h2 class="card-title">{displayProductName(product?.product_name)}</h2>
                 <div class="stat">
-                  <div class="stat-figure text-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                  <div class="stats shadow" style="overflow: hidden;">
+                    <div class="stat">
+                      <div class="stat-figure text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                      </div>
+                      <div class="stat-value text-secondary">{product?.product_mentions}</div>
+                      <div class="stat-desc">mentions on social media</div>
+                    </div>
                   </div>
-                  <div class="stat-title">Media Likes</div>
-                  <div class="stat-value">{product.product_likes}K</div>
-                  <div class="stat-title">Media Mentions</div>
-                  <div class="stat-value">{product.product_mentions}</div>
-                </div>
+
               <div class="card-actions justify-end">
               </div>
             </div>
@@ -84,21 +95,22 @@
 <br>
 
 <br>
-
-<!-- <h1 class="text-lg" style="font-family:'Gill Sans'">Brief</h1> -->
 <textarea class="textarea textarea-bordered" placeholder="Brief"></textarea>
+<!-- <div tabindex="0" class="collapse bg-base-200"> 
+  <div class="collapse-title text-xl font-medium">
+    
+  </div>
+  <div class="collapse-content"> 
+  </div>
+</div> -->
+<!-- <h1 class="text-lg" style="font-family:'Gill Sans'">Brief</h1> -->
 
 </div>
 
 <style>
 
-/* .navbar .flex.justify-center { */
-    /* margin-bottom: 1px; Add bottom margin to the SEPHORA title div */
-/* } */
-
 .stat-value {
     color: rgb(90, 88, 88) !important;
-    /* font-family: 'Gill Sans'; */
 }
 
 .stat-figure svg {
@@ -117,7 +129,7 @@ h1{
 }
 
 .carousel {
-    /* border: 1px solid #000; Add border to the entire carousel */
+    /* border: 1px solid #000; */
     padding: 10px; /* Add padding inside the carousel */
     margin: 0 auto; /* Center the carousel if needed */
     /* margin-bottom: 10px; Add bottom margin to the h1 tag */
@@ -135,7 +147,7 @@ h1{
 }
 
 .carousel-item img {
-    width: 250px; /* Adjust width as needed */
+    width: 200px; /* Adjust width as needed */
     height: auto;
     display: block;
 }
@@ -155,6 +167,10 @@ h1{
     width: 100%; /* This will make the textarea take full width of its container */
     height: 200px; /* Set the height in pixels as per your preference */
     /* Add any other styles you need */
+}
+
+.top-title {
+    margin-left: 30px; /* Add left margin to the h1 tag */
 }
 
 

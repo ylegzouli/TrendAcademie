@@ -97,6 +97,15 @@ def get_cumulative_likes(product_name: str, news_list: List[News]) -> int:
         return 0
     return total_likes
 
+def get_cumulative_comments(product_name: str, news_list: List[News]) -> int:
+    total_comments = 0
+    for news in news_list:
+        if product_name in news.product_list:
+            total_comments += news.comments
+    if total_comments <= 0:
+        return 0
+    return total_comments
+
 
 def main():
     df_news = pd.read_csv('data/news.csv')

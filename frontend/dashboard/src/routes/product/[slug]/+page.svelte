@@ -63,8 +63,68 @@
         </div>
         </div><br>
 
+        <div class="timeline-select-container">
+          <select class="select select-bordered select-sm max-w-xs">
+            <option selected>Month</option>
+            <option>Week</option>
+            <option>Day</option>
+          </select>
+          </div>
+
     <div class="product-container">
-      <div class="product-info">
+      
+      <div class="card lg:card-side bg-base-100 shadow-xl">
+        <figure><img src={productData?.image} alt="Album"/></figure>
+        <div class="card-body">
+          <p>{productData?.brand}</p>
+          <h2 class="card-title">{productData?.name}</h2>
+          <p>{productData?.description}</p>
+          <br>
+          <div class="stats shadow" style="overflow: hidden;">
+  
+            <div class="stat">
+              <div class="stat-figure text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+              </div>
+              <div class="stat-title">Pruduct Likes</div>
+              <div class="stat-value text-primary">{productData?.likes}K</div>
+              <div class="stat-desc">likes on social media</div>
+            </div>
+            
+            <div class="stat">
+              <div class="stat-figure text-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+              </div>
+              <div class="stat-title">Product Comment</div>
+              <div class="stat-value text-secondary">{productData?.comment}K</div>
+              <div class="stat-desc">comment on social media</div>
+            </div>
+            
+            <div class="stat">
+              <div class="stat-figure text-secondary">
+                <div class="avatar online">
+                  <div class="w-16 rounded-full">
+                    <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    <!-- <img src=rank.png alt=foo/> -->
+                  </div>
+                </div>
+              </div>
+              <div class="stat-title">Share by</div>
+              <!-- <div class="stat-value">{productData?.influencer}</div> -->
+              {#if productData?.influencer}
+              {#each productData.influencer.slice(0, 3) as influencer, index}
+                  <span style="color:cornflowerblue">@{influencer}</span>
+              {/each}
+          {/if}
+            </div> 
+          </div>
+
+          <div></div>
+
+        </div>
+      </div>
+      
+      <!-- <div class="product-info card w-96 bg-base-100 shadow-xl">
         <p>{productData?.name}</p>
         <h2><strong>{productData?.brand}</strong></h2>
         <br>
@@ -79,10 +139,10 @@
         <div class="stat-value text-primary">{productData?.likes}K</div>
         <div class="stat-title">Media Mentions</div>
         <div class="stat-value text-primary">{productData?.mentions}</div>
-      </div>
-      <div class="product-image">
-        <!-- <img src={productData?.image} alt="ProductImage"> -->
+      </div> -->
 
+
+      <!-- <div class="product-image">
         <div class="card w-96 bg-base-100 shadow-xl">
             <figure><img src={productData?.image} alt="Shoes" /></figure>
             <div class="card-body">
@@ -92,10 +152,11 @@
               </div>
             </div>
           </div>
-      </div>
+      </div> -->
+  
   </div>
 
-    <h3>Produits comparables</h3>
+    <h1 class="text-lg" style="font-family:'Gill Sans'">Similar Products</h1>
 
 
     <div class="carousel rounded-box">
@@ -114,6 +175,25 @@
         {/each}
     </div>
 
+    <h1 class="text-lg" style="font-family:'Gill Sans'">Complementary Products</h1>
+
+
+    <div class="carousel rounded-box">
+        {#each compatible as compatible}
+          <div class="carousel-item">
+            <a href="product/0">
+                <div class="card w-96 bg-base-100 shadow-xl">
+                    <figure><img src={compatible} alt="Shoes" /></figure>
+                    <div class="card-body">
+                      <div class="card-actions justify-end">
+                      </div>
+                    </div>
+                </div>
+            </a>
+          </div>
+        {/each}
+    </div>
+  
 </div>
 
 <style>
@@ -126,31 +206,46 @@
   }
 
   .product-container {
-    display: flex;
+    /* display: flex;
     justify-content: space-between;
     align-items: center;
-    /* border: 1px solid #000; */
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-  .product-info {
-    flex: 1;
     border: 1px solid #000;
-    padding: 10px;
+    padding: 20px; */
+    margin-bottom: 50px; 
   }
-  .product-image {
+
+.product-info, .product-image {
+  flex: 1 !important ;/* Equal flex grow and shrink */
+  flex-basis: 0 !important; /* Starting width */
+  box-sizing: border-box !important; /* Include padding and border in the element's total width and height */
+  padding: 10px !important;
+  max-width: 50% !important; /* Explicitly set max-width to ensure equal width */
+}
+
+.timeline-select-container {
+    display: flex;
+    justify-content: flex-end; /* Aligns the child element to the right */
+    margin-right: 20px; /* Optional: Adds some right margin */
+}
+  
+  /* .product-info {
+    flex: 1; */
+    /* border: 1px solid #000; */
+    /* padding: 10px;
+  } */
+  /* .product-image {
     flex: 1;
     text-align: right;
     margin-left: 50px;
-  }
+  } */
   .product-image figure img {
     max-width: 100%;
     height: auto;
   }
-  .in-stock {
+  /* .in-stock {
     color: rgb(62, 209, 36);
-    /* font-weight: bold; */
-  }
+    * /font-weight: bold; */
+  /* } */
 
 .carousel {
     /* border: 1px solid #000; Add border to the entire carousel */
