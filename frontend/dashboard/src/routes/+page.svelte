@@ -1,6 +1,7 @@
 <script lang="ts">
     import axios from "axios";
     import { onMount } from "svelte";
+    import arrow from '$lib/assets/arrow-back-ios.svg'
 
     type Product = {
         product_id: string
@@ -53,22 +54,28 @@
 
 <div class="main-container">
 
-<div class="navbar rounded-box" style="background-color: white;">
-  <div class="flex justify-center w-full title" style="font-family: 'Gill Sans'">
-    <div class="text-lg" style="font-size: 24px;">S E P H O R A</div>
-  </div>
-  </div><br>
+    <div class="navbar bg-base-100">
+        <div class="navbar-start">
+            <a href="/">
+                <img src={arrow} alt="back icon"/>
+            </a>
+        </div>
+        <div class="navbar-center">
+          <div class="text-lg" style="font-size: 24px;">S E P H O R A</div>
+        </div>
+        <div class="navbar-end">
+            <div class="timeline-select-container">
+            <select class="select select-bordered select-sm max-w-xs" bind:value={selectedTimeline}>
+              <option selected>Month</option>
+              <option>Week</option>
+              <option>Day</option>
+            </select>
+          </div>
+        </div>
+      </div>
 
-  <div class="timeline-select-container">
-  <select class="select select-bordered select-sm max-w-xs" bind:value={selectedTimeline}>
-    <option selected>Month</option>
-    <option>Week</option>
-    <option>Day</option>
-  </select>
-  </div>
-
-<br>
-
+    <br>
+    <br>
 
 <h1 class="text-lg top-title" style="font-family:'Gill Sans'">TOP PRODUCTS</h1>
 <br>
