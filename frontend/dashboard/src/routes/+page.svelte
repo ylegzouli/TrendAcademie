@@ -1,7 +1,6 @@
 <script lang="ts">
     import axios from "axios";
     import { onMount } from "svelte";
-    import arrow from '$lib/assets/arrow-back-ios.svg'
 
     type Product = {
         product_id: string
@@ -18,8 +17,17 @@
         brand_image: string
     };
 
+    type Influencer = {
+        id: string
+        name: string
+        image: string // backend url
+        likes: string
+        // followers: string // instagram
+    }
+
     let brands: Brand[] = [];
     let products: Product[] = [];
+    let influencers: Influencer[] = [];
     let selectedTimeline: string = 'Month'; // Default value
 
     async function init(timeline: string) {
@@ -28,8 +36,8 @@
             console.log('init success')
             brands = response.data.brands
             products = response.data.products
-            console.log(brands)
-            console.log(products)
+            influencers = response.data.influencers
+            console.log(response.data)
         } catch (e) {
             console.log('init failure')
             console.log(e)
@@ -105,9 +113,31 @@
       </div>
     {/each}
 </div>
-<br>
 
 <br>
+<br>
+
+<h1 class="text-lg top-title" style="font-family:'Gill Sans'">TOP INFLUENCERS</h1>
+<br>
+<div class="carousel rounded-box">
+    {#each influencers as influencer}
+      <div class="carousel-item">
+          <a href="influencer/{influencer.name}">
+          <div class="card w-96 bg-base-100 shadow-xl">
+              <figure><img src="http://localhost:8000/images/{influencer.name}" alt="{influencer.name}" /></figure>
+            <div class="card-body">
+              <p>{influencer.name}</p>
+              <p>{influencer.likes} likes</p>
+            </div>
+        </div>
+      </a>
+      </div>
+    {/each}
+</div>
+
+<br>
+<br>
+
 <textarea class="textarea textarea-bordered" placeholder="Brief"></textarea>
 </div>
 
