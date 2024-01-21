@@ -116,10 +116,19 @@
       <div class="carousel-item">
           <a href="influencer/{influencer?.name}">
           <div class="card w-96 bg-base-100 shadow-xl">
-              <figure><img src="http://localhost:8000/images/{influencer.name}" alt="{influencer.name}" /></figure>
+            <figure>
+                <img class="mask mask-circle" src="http://localhost:8000/images/{influencer?.name}" alt="ProfilePicture"/>
+            </figure>
             <div class="card-body">
-              <p>{influencer?.name}</p>
-              <p>{influencer?.likes} likes</p>
+                <div style="display: flex;">
+                    <img src="/tiktok.png" alt="tiktok" style="width: 20px; height: 20px; margin-right: 5px;"/>
+                    {influencer?.name}
+                </div>
+                <div style="display: flex;">
+                    <img src="/instagram.png" alt="tiktok" style="width: 20px; height: 20px; margin-right: 5px;"/>
+                    {influencer?.name}
+                </div>
+                <p>{influencer?.likes} likes</p>
             </div>
         </div>
       </a>
