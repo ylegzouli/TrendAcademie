@@ -1,7 +1,6 @@
 <script lang="ts">
     import axios from "axios";
     import { onMount } from "svelte";
-    import arrow from '$lib/assets/arrow-back-ios.svg'
 
     type Product = {
         product_id: string

@@ -162,15 +162,49 @@ def run_trend_for_list_of_news(news_list: List[News]) -> List[News]:
 
 from extractor import extractor
 
-news = extractor(nb_days=30)
+news = extractor(nb_days=3)
 print(len(news))
-
-#%%
-
 news = run_trend_for_list_of_news(news)
 
+#%%
+## CODE TO GET DATA FOR TIKTOK CLONE
+
+# import requests
+# from product import get_product_id, get_product_image, get_product_name, get_product_brand, get_product_description, get_influencer
+
+# i=0
+# data = []
+# for new in news[0]:
+#     if new.is_video:
+#         if len(new.product_list) > 0:
+#             print(f"--------------------------------------------------\n{i}")
+#             print(new.video_url)
+#             print(new.product_list)
+#             print(new.likes)
+#             print(new.username)
+#             for product in new.product_list:
+#                 print(product)
+#                 tmp = {
+#                     "id": i,
+#                     "product_name": product,
+#                     "image": get_product_image(product),
+#                     "brand": get_product_brand(get_product_id(product))
+#                 }
+#                 data.append(tmp)
+#             response = requests.get(new.video_url)
+#             with open(f"./data/videos/{i}.mp4", "wb") as file:
+#                 file.write(response.content)
+#             i += 1
+            
+# print(data)
+
+# with open('data/data_tiktok.json', 'w') as outfile:
+#     json.dump(data, outfile)
+
 
 #%%
+# CODE TO SAVE DATA IN PICKLE    
+
 # import pickle 
 # print(len(news))
 
@@ -178,48 +212,11 @@ news = run_trend_for_list_of_news(news)
 # with open('data/news_data.pkl', 'wb') as file:
 #     pickle.dump(news, file)
 
-#%%
 # news_to_csv(news)
-import pickle 
-with open('data/news_data.pkl', 'rb') as file:
-    loaded_news_list = pickle.load(file)
-
-#%%
-print(loaded_news_list[0])
-
-
-#%%
-from ranking import news_to_product_occurence, news_to_brand_occurence
-
-df_product = news_to_product_occurence(loaded_news_list[0])
+# import pickle 
+# with open('data/news_data.pkl', 'rb') as file:
+#     loaded_news_list = pickle.load(file)
 
 #%%
 
-df_brand = news_to_brand_occurence(loaded_news_list[0])
 
-#%%
-
-print(df_product)
-
-# %%
-
-for new in loaded_news_list[0]:
-    if new.is_video:
-        print(new.video_url)
-
-# for product in products:
-#     print(product)
-
-# print("--------------------------------------------------")
-
-# for brand in brands:
-#     print(brand)
-# print("--------------------------------------------------")
-
-# %%
-
-# %%
-
-data = pd.read_csv("data/news.csv")
-
-# %%
