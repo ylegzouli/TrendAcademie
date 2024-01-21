@@ -1,12 +1,15 @@
 #%%
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from ranking import mock_products, mock_brands
 import requests
 from product import get_product_id, get_product_image, get_product_name, get_product_brand, get_product_description, get_influencer, process_news
+from influencer import get_influencer_id, get_influencer_image, get_influencer_total_likes
 from ranking import news_to_product_occurence, get_cumulative_likes, get_cumulative_comments
 import pickle
+import pandas as pd
+import os
 
 news_all = pickle.load(open("data/news_data.pkl", "rb"))[0]
 
@@ -36,7 +39,6 @@ def get_products():
 def get_brands():
     return mock_brands()
 
-
 @app.get("/videos/{index}")
 def get_video(index):
     urls=[
@@ -54,6 +56,14 @@ def get_video(index):
         file.write(response.content)
     return FileResponse("frontend/tiktok-clone/src/temp/old_video.mp4")
 
+@app.get("/images/{influencer_name}")
+def get_image(influencer_name: str):
+    image_path = f"data/images/{influencer_name}.jpg"
+    if os.path.exists(image_path):
+        return FileResponse(image_path)
+    else:
+        # raise HTTPException(status_code=404, detail="Image not found")
+        return FileResponse(f"data/images/namvo.jpg")
 
 #%%
 @app.get("/home/{time}")
@@ -67,7 +77,6 @@ def get_home_data(time):
 
     df = news_to_product_occurence(news)
     product_names = df['product_name'].tolist()
-    
     products = []
     for name in product_names:
         product_id = get_product_id(name)  # Assuming get_id(name) returns the product id
@@ -78,20 +87,31 @@ def get_home_data(time):
             product_mention = df[df['product_name'] == name]["occurrences"].values[0]
         except:
             product_mention = 0
-        
+
         product = {
-                "product_id": str(product_id),
-                "product_name": name,
-                "product_image": product_image,
-                "product_mentions": str(product_mention*4),
-                "product_likes": str(product_likes),
-                "product_brand": product_brand,
-            }
+            "product_id": str(product_id),
+            "product_name": name,
+            "product_image": product_image,
+            "product_mentions": str(product_mention*4),
+            "product_likes": str(product_likes),
+            "product_brand": product_brand,
+        }
         products.append(product)
+
+    influencers = []
+    influencer_likes = get_influencer_total_likes(news) # so they sorted by likes, from highest to lowest
+    for influencer, likes in influencer_likes.items():
+        influencers.append({
+            "id": str(get_influencer_id(influencer)),
+            "name": influencer,
+            "image": get_influencer_image(influencer),
+            "likes": str(likes),
+        })
 
     return {
         "products": products,
         "brands": [],
+        "influencers": influencers,
     }
 
 @app.get("/product/{time}/{product_id}")
