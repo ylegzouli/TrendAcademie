@@ -42,13 +42,14 @@ def news_to_sephora_products(df_news: pd.DataFrame, df_sephora: pd.DataFrame) ->
     product_names = sum(df_news['product_list'].tolist(), [])
     product_names = list(set(product_names))
 
-    df_products = pd.DataFrame([], columns=['product_name', 'id_sephora', 'id_news'])
+    data = []
 
     for product_name in product_names:
         id_news = df_news[df_news.product_list.apply(lambda x: product_name in x)].index.tolist()
         id_sephora = df_sephora[df_sephora.Product == product_name].index.tolist()[0]
-        df_products = df_products._append({'product_name': product_name, 'id_sephora': id_sephora, 'id_news': id_news}, ignore_index=True)
-    return df_products
+        data.append({'product_name': product_name, 'id_sephora': id_sephora, 'id_news': id_news})
+
+    return pd.DataFrame(data)
 
 def news_to_sephora_brands(df_news: pd.DataFrame) -> pd.DataFrame:
 
@@ -56,12 +57,13 @@ def news_to_sephora_brands(df_news: pd.DataFrame) -> pd.DataFrame:
     brand_names = sum(df_news['brand_list'].tolist(), [])
     brand_names = list(set(brand_names))
 
-    df_brands = pd.DataFrame([], columns=['brand_name', 'id_news'])
+    data = []
 
     for brand_name in brand_names:
         id_news = df_news[df_news.brand_list.apply(lambda x: brand_name in x)].index.tolist()
-        df_brands = df_brands._append({'brand_name': brand_name, 'id_news': id_news}, ignore_index=True)
-    return df_brands
+        data.append({'brand_name': brand_name, 'id_news': id_news})
+
+    return pd.DataFrame(data)
 
 def get_top_products(df_products: pd.DataFrame, df_sephora: pd.DataFrame, n: int):
     """
