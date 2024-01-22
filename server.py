@@ -108,8 +108,8 @@ def get_home_data(time):
     influencers = []
     influencer_likes = get_influencer_total_likes(news) # so they sorted by likes, from highest to lowest
     for influencer, likes in influencer_likes.items():
-        ig_followers = df_influencers.loc[df_influencers['name'] == influencer, 'ig_followers']
-        ig_followers = ig_followers.values[0] if not ig_followers.empty else 0
+        ig_followers_series = df_influencers.loc[df_influencers['name'] == influencer, 'ig_followers']
+        ig_followers = ig_followers_series.iloc[0] if not ig_followers_series.empty else '0'
         influencers.append({
             "id": str(get_influencer_id(influencer)),
             "name": influencer,
