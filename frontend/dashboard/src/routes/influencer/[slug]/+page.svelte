@@ -51,31 +51,55 @@
           <h2 class="card-title">ig followers: {influencer?.ig_followers}</h2>
           <br>
           <br>
-        <h1 class="text-lg" style="font-family:'Gill Sans'">Details :</h1>
-
-          <div class="stats shadow" style="overflow: hidden; margin-top: 20px">
-
-            <!-- <div class="stat stat-container">
-              <img src="/instagram.png" alt="Shoes" width="50" height="50"/>
-                <div class="stat-value text-primary">{productData?.likes}K</div>
-            </div>
-
-            <div class="stat stat-container">
-              <img src="/tiktok.webp" alt="Shoes" width="50" height="50"/>
-                <div class="stat-value text-primary">0.0K</div>
-            </div>
-
-            <div class="stat stat-container">
-              <img src="/youtube.webp" alt="Shoes" width="50" height="50"/>
-                <div class="stat-value text-primary">0.0K</div>
-            </div> -->
-
-          </div>
         </div>
       </div>
 
   </div>
 
+  <article class="prose">
+    <h2>Top products</h2>
+  </article>
+
+  <br>
+
+    <div class="overflow-x-auto">
+        <table class="table">
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Brand</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        {#each influencer?.top_products as product}
+        <tr>
+            <td>
+                <div class="flex items-center gap-3">
+                    <div class="avatar">
+                        <div class="mask mask-squircle w-12 h-12">
+                            <img class="mask mask-squircle" src={product?.image} />
+                        </div>
+                    </div>
+                <div>
+                    <div class="font-bold">
+                        {product.name}
+                    </div>
+                </div>
+              </div>
+            </td>
+            <td>
+                {product?.brand}
+            </td>
+            <th>
+                <a href="/product/{product?.id}">
+                    <button class="btn btn-ghost btn-xs">details</button>
+                </a>
+            </th>
+        </tr>
+        {/each}
+        </table>
+    </div>
 </div>
 
 <style>

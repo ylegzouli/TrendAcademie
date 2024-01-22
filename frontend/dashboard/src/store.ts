@@ -5,6 +5,7 @@ type Influencer = {
     name: string
     image: string // backend url
     likes: string
+    top_products: any
     // followers: string // instagram
 }
 
