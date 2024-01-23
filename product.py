@@ -1,8 +1,10 @@
 #%%
 import pandas as pd
 from data_class import News
+import json
 
 DATA = pd.read_csv("data/sephora.csv")
+data_similar = json.load(open("data/products_data_with_idx.json", "r"))
 
 #%%
 
@@ -57,7 +59,15 @@ def get_influencer(product_id: int, news: list[News]) -> str:
         return list(set(influencer))
     except:
         return []
+    
 
+def get_similar(product_id: int) -> list:
+    """
+    """
+    try:
+        return data_similar[get_product_name(product_id)]
+    except:
+        return []
 
 
 #%%
@@ -106,7 +116,7 @@ def plot_product_mentions(news_list: List[News], product_name: str):
     df.reset_index(inplace=True)
 
     # Plotting
-    fig = px.line(df, x='Date', y='CumulativeMentions', title=f'7-Day Rolling Sum of {product_name} Mentions in News')
+    fig = px.line(df, x='Date', y='Mentions' * 4, title=f'7-Day Rolling Sum of {product_name} Mentions in News')
     fig.update_xaxes(
         tickformat='%Y-%m-%d',
         dtick="D1",  # Daily ticks

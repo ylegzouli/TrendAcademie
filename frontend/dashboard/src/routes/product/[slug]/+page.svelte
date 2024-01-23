@@ -3,6 +3,18 @@
     import { page } from '$app/stores';
     import axios from 'axios';
     import arrow from '$lib/assets/arrow-back-ios.svg'
+    
+    import Plot from 'svelte-plotly.js';
+
+    const data = [
+    {
+      x: [1, 2, 3, 4, 5],
+      y: [1, 2, 4, 8, 16]
+    }
+  ];
+
+
+
 
     let slug: any;
     const unsubscribe = page.subscribe(({ params }) => {
@@ -22,6 +34,7 @@
             console.log('init success')
             console.log(response.data)
             productData = response.data
+
         } catch (e) {
             console.log('init failure')
             console.log(e)
@@ -35,17 +48,12 @@
         }
     }
 
-    onMount(() => init(selectedTimeline));
+        // Function to truncate product name
+    function displayProductName(productName: string): string {
+        return productName.length > 27 ? `${productName.substring(0, 27)} ...` : productName;
+    }
 
-    let compatible = [
-        "https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg",
-        "https://daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.jpg",
-        "https://daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg",
-        "https://daisyui.com/images/stock/photo-1494253109108-2e30c049369b.jpg",
-        "https://daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.jpg",
-        "https://daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg",
-        "https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg"
-    ]
+    onMount(() => init(selectedTimeline));
 
 </script>
 
@@ -164,8 +172,6 @@
               {/if}
             </div>
           </div>
-
-    
         </div>
       </div>
 
@@ -177,12 +183,15 @@
 
 
     <div class="carousel rounded-box">
-        {#each compatible as compatible}
+        {#if productData?.similar}
+        {#each productData.similar as similar}
           <div class="carousel-item">
-            <a href="product/0">
+            <a href={`${window.location.origin}/product/${similar?.idx}`}>
                 <div class="card w-96 bg-base-100 shadow-xl">
-                    <figure><img src={compatible} alt="Shoes" /></figure>
+                    <figure><img src={similar?.image_url} alt="Shoes" /></figure>
                     <div class="card-body">
+                  <p>{similar?.brand}</p>
+                  <h2 class="card-title">{displayProductName(similar?.name)}</h2>
                       <div class="card-actions justify-end">
                       </div>
                     </div>
@@ -190,34 +199,47 @@
             </a>
           </div>
         {/each}
+        {/if}
     </div>
 
     <h1 class="text-lg" style="font-family:'Gill Sans'">Complementary Products</h1>
 
-
     <div class="carousel rounded-box">
-        {#each compatible as compatible}
-          <div class="carousel-item">
-            <a href="product/0">
-                <div class="card w-96 bg-base-100 shadow-xl">
-                    <figure><img src={compatible} alt="Shoes" /></figure>
-                    <div class="card-body">
-                      <div class="card-actions justify-end">
-                      </div>
+      {#if productData?.compatible}
+      {#each productData.compatible as compatible}
+        {#if productData?.name != compatible?.name}
+        <div class="carousel-item">
+          <a href="{compatible?.idx}">
+              <div class="card w-96 bg-base-100 shadow-xl">
+                  <figure><img src={compatible?.image_url} alt="Shoes" /></figure>
+                  <div class="card-body">
+                  <p>{compatible?.brand}</p>
+                  <h2 class="card-title">{displayProductName(compatible?.name)}</h2>
+                    <div class="card-actions justify-end">
                     </div>
-                </div>
-            </a>
-          </div>
-        {/each}
-    </div>
+                  </div>
+              </div>
+          </a>
+        </div>
+        {/if}
+      {/each}
+      {/if}
+  </div>
+
 
 </div>
 
+<Plot
+  {data}
+  layout={{
+    margin: { t: 0 }
+  }}
+  fillParent='width'
+  debounce={250}
+/>
+
 <style>
 
-/* .navbar {
-
-} */
 
 .stat-value {
     margin: 0; /* You might want to reset margin for alignment, adjust as needed */

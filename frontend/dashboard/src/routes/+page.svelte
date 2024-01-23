@@ -159,6 +159,7 @@
     margin-top: 20px;
     margin-left: 20px;
     margin-right: 20px;
+
 }
 
 .stat-value {
@@ -192,7 +193,10 @@ h1{
 .carousel-item {
     flex: 0 0 auto;
     margin-right: 5px; /* Add space between items */
-    padding: 2px;
+    padding: 4px;
+    border-radius: 3%;
+
+
 }
 
 .carousel-item img {
