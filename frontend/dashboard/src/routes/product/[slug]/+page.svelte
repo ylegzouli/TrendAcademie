@@ -1,9 +1,8 @@
 <script lang="ts">
-    import { onDestroy, onMount } from 'svelte';
+    import { onDestroy } from 'svelte';
     import { page } from '$app/stores';
     import axios from 'axios';
     import arrow from '$lib/assets/arrow-back-ios.svg'
-    
     import Plot from 'svelte-plotly.js';
 
     const data = [
@@ -39,19 +38,17 @@
         }
     }
 
-        // Reactive statement to watch for changes in the selected timeline
-        $: {
+    // Reactive statement to watch for changes in the selected timeline
+    $: {
         if (selectedTimeline) {
             init(selectedTimeline);
         }
     }
 
-        // Function to truncate product name
+    // Function to truncate product name
     function displayProductName(productName: string): string {
         return productName.length > 27 ? `${productName.substring(0, 27)} ...` : productName;
     }
-
-    onMount(() => init(selectedTimeline));
 
 </script>
 
@@ -88,11 +85,11 @@
           <p>{productData?.brand}</p>
           <h2 class="card-title">{productData?.name}</h2>
           <p>{productData?.description}</p>
-          
+
           <br>
-          
+
           <div class="stats shadow" style="overflow: hidden;">
-            
+
             <div class="stat">
                 <img src="/instagram.png" alt="Shoes" width="60" height="60"/>
               <!-- <div class="stat-figure text-primary">
@@ -133,7 +130,7 @@
 
 
           <div class="stats shadow" style="overflow: hidden;">
-            
+
             <div class="stat">
               <img src="/tiktok.webp" alt="Shoes" width="63" height="63"/>
               <!-- <div class="stat-figure text-primary">
