@@ -43,8 +43,6 @@
         }
     }
 
-    onMount(() => init(selectedTimeline));
-
     // Function to truncate product name
     function displayProductName(productName: string): string {
         return productName.length > 27 ? `${productName.substring(0, 27)} ...` : productName;

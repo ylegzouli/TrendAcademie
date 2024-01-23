@@ -51,8 +51,6 @@
         }
     }
 
-    onMount(() => init(selectedTimeline));
-
     let compatible = [
         "https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg",
         "https://daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.jpg",
