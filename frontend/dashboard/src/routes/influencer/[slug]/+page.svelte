@@ -1,7 +1,6 @@
 <script lang="ts">
     import { onDestroy, onMount } from 'svelte';
     import { page } from '$app/stores';
-    import axios from 'axios';
     import arrow from '$lib/assets/arrow-back-ios.svg'
     import { influencers } from '../../../store.ts';
 
@@ -47,8 +46,17 @@
             <img class="mask mask-circle" src="http://localhost:8000/images/{influencer?.name}" alt="ProfilePicture"/>
         </figure>
         <div class="card-body">
-          <h2 class="card-title">{influencer?.name}</h2>
-          <h2 class="card-title">ig followers: {influencer?.ig_followers}</h2>
+
+            <div style="display: flex;">
+                <img src="/instagram.png" alt="instagram" style="width: 20px; height: 20px; margin-right: 5px;"/>
+                <h2 class="card-title" style="margin-right: 5px;">{influencer?.name}</h2>
+                <h2 class="card-title">({influencer?.ig_followers} followers)</h2>
+            </div>
+            <div style="display: flex;">
+                <img src="/tiktok.png" alt="tiktok" style="width: 20px; height: 20px; margin-right: 5px;"/>
+                <h2 class="card-title" style="margin-right: 5px;">{influencer?.name}</h2>
+                <h2 class="card-title">({influencer?.ig_followers} followers)</h2>
+            </div>
           <br>
           <br>
         </div>
@@ -57,7 +65,7 @@
   </div>
 
   <article class="prose">
-    <h2>Top products</h2>
+    <h2>Showcased products</h2>
   </article>
 
   <br>
@@ -66,7 +74,7 @@
         <table class="table">
         <thead>
           <tr>
-            <th>Product Name</th>
+            <th>Product</th>
             <th>Brand</th>
             <th></th>
           </tr>
