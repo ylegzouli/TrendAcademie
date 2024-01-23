@@ -80,13 +80,13 @@
           </tr>
         </thead>
         <tbody>
-        {#each influencer?.top_products as product}
+        {#each influencer?.top_products || [] as product}
         <tr>
             <td>
                 <div class="flex items-center gap-3">
                     <div class="avatar">
                         <div class="mask mask-squircle w-12 h-12">
-                            <img class="mask mask-squircle" src={product?.image} />
+                            <img class="mask mask-squircle" src={product.image} alt="product"/>
                         </div>
                     </div>
                 <div>
@@ -97,10 +97,10 @@
               </div>
             </td>
             <td>
-                {product?.brand}
+                {product.brand}
             </td>
             <th>
-                <a href="/product/{product?.id}">
+                <a href="/product/{product.id}">
                     <button class="btn btn-ghost btn-xs">details</button>
                 </a>
             </th>
