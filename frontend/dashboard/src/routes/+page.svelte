@@ -45,7 +45,7 @@
 
     // Function to truncate product name
     function displayProductName(productName: string): string {
-        return productName.length > 27 ? `${productName.substring(0, 27)} ...` : productName;
+        return productName.length > 23 ? `${productName.substring(0, 23)} ...` : productName;
     }
 
 </script>
@@ -120,13 +120,25 @@
             <div class="card-body">
                 <div style="display: flex;">
                     <img src="/tiktok.png" alt="tiktok" style="width: 20px; height: 20px; margin-right: 5px;"/>
-                    {influencer.name}
+                    @{influencer.name}
                 </div>
                 <div style="display: flex;">
                     <img src="/instagram.png" alt="tiktok" style="width: 20px; height: 20px; margin-right: 5px;"/>
-                    {influencer.name}
+                    @{influencer.name}
                 </div>
-                <p>{influencer.likes} likes</p>
+                <div class="stat">
+                    <div class="stats shadow" style="overflow: hidden;">
+                      <div class="stat">
+                        <div class="stat-figure text-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                          </div>
+
+
+                        <div class="stat-value text-secondary">{influencer.likes /1000}k</div>
+                        <div class="stat-desc">likes on products mention</div>
+                      </div>
+                    </div>
+                <!-- <p>{influencer?.likes} likes</p> -->
             </div>
         </div>
       </a>
@@ -137,33 +149,47 @@
 <br>
 <br>
 
-<textarea class="textarea textarea-bordered" placeholder="Brief"></textarea>
+<!-- <textarea class="textarea textarea-bordered" placeholder="Brief"></textarea> -->
 </div>
 
 <style>
+.main-container {
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
+
+}
 
 .stat-value {
+    font-size: 140%; /* Smaller font size for the stat value */
     color: rgb(90, 88, 88) !important;
+
+}
+
+.stat-desc {
+    font-size: 70%; /* Smaller font size for the stat description */
 }
 
 .stat-figure svg {
+    width: 50%; /* Smaller width for the SVG */
+    height: auto; /* Height will scale automatically */
     stroke: rgb(199, 0, 33) !important;
 }
 
 .timeline-select-container {
     display: flex;
     justify-content: flex-end; /* Aligns the child element to the right */
-    margin-right: 20px; /* Optional: Adds some right margin */
+    margin-right: 1%; /* Optional: Adds some right margin */
 }
 
 /* Targeting the h1 tag with "PRODUCTS" */
 h1{
-    margin-left: 7px; /* Add left margin to the h1 tag */
+    margin-left: 4%; /* Add left margin to the h1 tag */
 }
 
 .carousel {
     /* border: 1px solid #000; */
-    padding: 10px; /* Add padding inside the carousel */
+    padding: 1%; /* Add padding inside the carousel */
     margin: 0 auto; /* Center the carousel if needed */
     display: flex;
     overflow-x: auto;
@@ -171,13 +197,22 @@ h1{
 }
 
 .carousel-item {
-    flex: 0 0 auto;
-    margin-right: 5px; /* Add space between items */
-    padding: 2px;
+    flex: 0 0 auto; 
+    margin-right: 1%;
+    /* padding: 2%; */
+    border-radius: 3%;
+
+    /* width: 45%; */
+    /* margin-right: 2%; */
+    padding: 1%; 
+    border-radius: 3%;
+    box-sizing: border-box;
+
+
 }
 
 .carousel-item img {
-    width: 200px; /* Adjust width as needed */
+    width: 35%; /* Adjust width as needed */
     height: auto;
     display: block;
 }
@@ -192,14 +227,23 @@ h1{
     margin-right: 20px; /* Right margin */
 }
 
-.textarea {
-    width: 100%; /* This will make the textarea take full width of its container */
-    height: 200px; /* Set the height in pixels as per your preference */
-}
 
 .top-title {
     margin-left: 30px; /* Add left margin to the h1 tag */
 }
 
+.stats {
+    padding: 0.5%; /* Reduced padding inside the stats */
+}
+
+.stat {
+    margin: 0.5% 0; /* Reduced vertical margin for each stat */
+}
+
+/* Additional adjustment to the container of the stats if necessary */
+.stats.shadow {
+    width: 90%; /* Adjust width of the stat container */
+    margin: auto; /* Center the stat container if needed */
+}
 
 </style>

@@ -1,10 +1,10 @@
 #%%
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from ranking import mock_products, mock_brands
 import requests
-from product import get_product_id, get_product_image, get_product_name, get_product_brand, get_product_description, get_influencer, process_news
+from product import get_product_id, get_product_image, get_product_name, get_product_brand, get_product_description, get_influencer, process_news, get_similar
 from influencer import get_influencer_id, get_influencer_total_likes, get_influencer_top_products
 from ranking import news_to_product_occurence, get_cumulative_likes, get_cumulative_comments
 import pickle
@@ -140,6 +140,13 @@ def get_product(time, product_id):
     product_likes = get_cumulative_likes(product_name, news) / 1000
     product_comment = get_cumulative_comments(product_name, news) / 1000
     product_influencer = get_influencer(product_id, news)
+    products = get_similar(product_id)
+    try:
+        similar = products['similar_products']
+        compementaire = products['complementary_products']
+    except:
+        similar = []
+        compementaire = []
     try:
         product_mentions = news_to_product_occurence(news)[news_to_product_occurence(news)['product_name'] == product_name]["occurrences"].values[0] * 4
     except:
@@ -153,12 +160,11 @@ def get_product(time, product_id):
         "likes": str(product_likes),
         "mentions": str(product_mentions),
         "comment": str(product_comment),
+        "similar": similar,
+        "compatible": compementaire,
 
         "in_stock": "In stock",
         "influencer": product_influencer,
-        "similar": "",
-        "compatible": "",
-        "category": "",
         "highlight": "",
     }
 

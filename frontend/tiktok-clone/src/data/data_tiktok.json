@@ -1,0 +1,80 @@
+[
+    {
+        "id": 0,
+        "product_name": "MatteTrance\u2122 Lipstick",
+        "image": "https://www.sephora.com/productimages/sku/s2458743-main-zoom.jpg?imwidth=315",
+        "brand": "PAT McGRATH LABS"
+    },
+    {
+        "id": 0,
+        "product_name": "PermaGel Ultra Lip Pencil",
+        "image": "https://www.sephora.com/productimages/sku/s2436756-main-zoom.jpg?imwidth=315",
+        "brand": "Divine Rose II Collection"
+    },
+    {
+        "id": 1,
+        "product_name": "Sublime Perfection Blurring Under-Eye Setting Powder",
+        "image": "https://www.sephora.com/productimages/sku/s2315471-main-zoom.jpg?imwidth=315",
+        "brand": "PAT McGRATH LABS"
+    },
+    {
+        "id": 1,
+        "product_name": "IntensifEYES\u2122 Longwear Eyeshadow Primer",
+        "image": "https://www.sephora.com/productimages/sku/s2699429-main-zoom.jpg?imwidth=315",
+        "brand": "PAT McGRATH LABS"
+    },
+    {
+        "id": 1,
+        "product_name": "Dark Star Volumizing Mascara",
+        "image": "https://www.sephora.com/productimages/sku/s2316735-main-zoom.jpg?imwidth=315",
+        "brand": "PAT McGRATH LABS"
+    },
+    {
+        "id": 1,
+        "product_name": "PermaGel Ultra Lip Pencil",
+        "image": "https://www.sephora.com/productimages/sku/s2436756-main-zoom.jpg?imwidth=315",
+        "brand": "Divine Rose II Collection"
+    },
+    {
+        "id": 2,
+        "product_name": "MatteTrance\u2122 Lipstick",
+        "image": "https://www.sephora.com/productimages/sku/s2458743-main-zoom.jpg?imwidth=315",
+        "brand": "PAT McGRATH LABS"
+    },
+    {
+        "id": 3,
+        "product_name": "The Artist",
+        "image": "https://www.sephora.com/productimages/sku/s2721132-main-zoom.jpg?imwidth=315",
+        "brand": "Most Stimulating Dual Vibrator"
+    },
+    {
+        "id": 3,
+        "product_name": "Major Dimension Eyeshadow Palette",
+        "image": "https://www.sephora.com/productimages/sku/s2464006-main-zoom.jpg?imwidth=315",
+        "brand": "PATRICK TA"
+    },
+    {
+        "id": 3,
+        "product_name": "Major Headlines Matte Suede Lipstick",
+        "image": "https://www.sephora.com/productimages/sku/s2699320-main-zoom.jpg?imwidth=315",
+        "brand": "PATRICK TA"
+    },
+    {
+        "id": 4,
+        "product_name": "Extreme Mascara",
+        "image": "https://www.sephora.com/productimages/sku/s1987478-main-zoom.jpg?imwidth=315",
+        "brand": "TOM FORD"
+    },
+    {
+        "id": 5,
+        "product_name": "I Need a Nude Eyeshadow Palette",
+        "image": "https://www.sephora.com/productimages/sku/s2697456-main-zoom.jpg?imwidth=315",
+        "brand": "Natasha Denona"
+    },
+    {
+        "id": 5,
+        "product_name": "I Need A Nude Lip Liner",
+        "image": "https://www.sephora.com/productimages/sku/s2647121-main-zoom.jpg?imwidth=315",
+        "brand": "Natasha Denona"
+    }
+]
