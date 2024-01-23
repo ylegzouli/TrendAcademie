@@ -226,6 +226,10 @@ h1{
     margin-left: 30px; /* Add left margin to the h1 tag */
 }
 
+.card-title {
+    font-size: 18px; /* Smaller font size for the card title */
+}
+
 .stats {
     padding: 0.5%; /* Reduced padding inside the stats */
 }
