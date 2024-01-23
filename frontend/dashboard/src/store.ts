@@ -9,3 +9,4 @@ type Influencer = {
 }
 
 export const influencers = writable<Influencer[]>([]);
+export const startup = writable<boolean>(true)

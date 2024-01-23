@@ -1,7 +1,7 @@
 <script lang="ts">
     import axios from "axios";
-    import { onMount } from "svelte";
-    import { influencers } from '../store.ts';
+    import { influencers, startup } from '../store.ts';
+    import wallpaper from '$lib/assets/sephora_wallpaper.jpg'
 
     type Product = {
         product_id: string
@@ -48,8 +48,17 @@
         return productName.length > 23 ? `${productName.substring(0, 23)} ...` : productName;
     }
 
+    function handleClick() {
+        startup.set(false)
+    }
+
 </script>
 
+<div class={$startup ? 'landing' : 'hidden'} style="background-image: url({wallpaper});">
+    <button class="btn btn-wide transparent" on:click={handleClick}>ENTER</button>
+</div>
+
+<div class={$startup ? 'hidden' : ''}>
 <div class="main-container">
 
     <div class="navbar bg-base-100">
@@ -151,8 +160,37 @@
 
 <!-- <textarea class="textarea textarea-bordered" placeholder="Brief"></textarea> -->
 </div>
+</div>
 
 <style>
+
+button.transparent {
+    background: transparent;
+    color: #fff; /* Adjust color as needed */
+    border: 1px solid #fff; /* Adjust border color as needed */
+}
+
+.landing {
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .hidden {
+    display: none;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1.5em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 150px;
+}
+
 .main-container {
     margin-top: 2%;
     margin-left: 2%;
@@ -197,14 +235,14 @@ h1{
 }
 
 .carousel-item {
-    flex: 0 0 auto; 
+    flex: 0 0 auto;
     margin-right: 1%;
     /* padding: 2%; */
     border-radius: 3%;
 
     /* width: 45%; */
     /* margin-right: 2%; */
-    padding: 1%; 
+    padding: 1%;
     border-radius: 3%;
     box-sizing: border-box;
 
