@@ -132,7 +132,7 @@
           <div class="stats shadow" style="overflow: hidden;">
 
             <div class="stat">
-              <img src="/tiktok.webp" alt="Shoes" width="63" height="63"/>
+              <img src="/tiktok.png" alt="Shoes" width="70" height="70"/>
               <!-- <div class="stat-figure text-primary">
               </div> -->
             </div>
