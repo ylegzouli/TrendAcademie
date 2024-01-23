@@ -1,6 +1,6 @@
 <script lang="ts">
     import axios from "axios";
-    import { influencers } from '../store.ts';
+    import { influencers, startup } from '../store.ts';
     import wallpaper from '$lib/assets/sephora_wallpaper.jpg'
 
     type Product = {
@@ -21,7 +21,7 @@
     let brands: Brand[] = [];
     let products: Product[] = [];
     let selectedTimeline: string = 'Month'; // Default value
-    let startup: boolean = true
+    // let startup: boolean = true
 
     async function init(timeline: string) {
         try {
@@ -50,16 +50,16 @@
     }
 
     function handleClick() {
-        startup = false;
+        startup.set(false)
     }
 
 </script>
 
-<div class={startup ? 'landing' : 'hidden'} style="background-image: url({wallpaper});">
+<div class={$startup ? 'landing' : 'hidden'} style="background-image: url({wallpaper});">
     <button class="btn btn-wide transparent" on:click={handleClick}>ENTER</button>
 </div>
 
-<div class={startup ? 'hidden' : ''}>
+<div class={$startup ? 'hidden' : ''}>
 <div class="main-container">
 
     <div class="navbar bg-base-100">

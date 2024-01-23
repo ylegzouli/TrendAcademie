@@ -47,7 +47,12 @@
 
     // Function to truncate product name
     function displayProductName(productName: string): string {
-        return productName.length > 27 ? `${productName.substring(0, 27)} ...` : productName;
+        return productName.length > 27 ? `${productName.substring(0, 27)}...` : productName;
+    }
+
+      // Function to truncate product name
+      function displayInstaName(productName: string): string {
+        return productName.length > 12 ? `${productName.substring(0, 12)}...` : productName;
     }
 
   function formatNumber(numStr) {
@@ -111,7 +116,7 @@
                 <div class="stat-title">Most share by</div>
                 {#if productData?.influencer}
                 {#each productData.influencer.slice(0, 2) as influencer, index}
-                    <span style="color:cornflowerblue; font-size: 77%;">@{influencer}</span>
+                    <span style="color:cornflowerblue; font-size: 77%;">@{displayInstaName(influencer)}</span>
                 {/each}
                 {/if}
               </div>
