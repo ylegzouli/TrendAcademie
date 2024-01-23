@@ -11,23 +11,6 @@
 
     onDestroy(unsubscribe);
 
-    // type ProductData = {
-    //     name: string
-    //     brand: string
-    //     image: string // link
-    //     description: string
-    //     influencer: string
-    //     in_stock: string // bool
-    //     similar: [string]
-    //     compatible: [string]
-    //     categories: [string]
-    //     highlights: [string]
-    //     likes: string
-    //     mentions: string
-    //     // rank (?)
-    // }
-
-    // let productData: productData
     let productData: any
     let selectedTimeline: string = 'Month'; // Default value
 
