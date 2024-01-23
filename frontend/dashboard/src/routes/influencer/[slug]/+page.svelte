@@ -19,6 +19,14 @@
 
     onMount(() => init());
 
+    function formatFollowersCount(count: any) {
+        if (count >= 1000000)
+            return (count / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+        if (count >= 1000)
+            return (count / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+        return count;
+    }
+
 </script>
 
 <div class="main-container">
@@ -50,12 +58,12 @@
             <div style="display: flex;">
                 <img src="/instagram.png" alt="instagram" style="width: 20px; height: 20px; margin-right: 5px;"/>
                 <h2 class="card-title" style="margin-right: 5px;">{influencer?.name}</h2>
-                <h2 class="card-title">({influencer?.ig_followers} followers)</h2>
+                <h2 class="card-title">({formatFollowersCount(influencer?.ig_followers)} followers)</h2>
             </div>
             <div style="display: flex;">
                 <img src="/tiktok.png" alt="tiktok" style="width: 20px; height: 20px; margin-right: 5px;"/>
                 <h2 class="card-title" style="margin-right: 5px;">{influencer?.name}</h2>
-                <h2 class="card-title">({influencer?.ig_followers} followers)</h2>
+                <h2 class="card-title">({formatFollowersCount(influencer?.ig_followers)} followers)</h2>
             </div>
           <br>
           <br>
