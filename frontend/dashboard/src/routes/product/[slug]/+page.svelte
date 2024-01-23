@@ -15,14 +15,12 @@
 
 
 
-
     let slug: any;
     const unsubscribe = page.subscribe(({ params }) => {
         slug = params.slug;
     });
 
     onDestroy(unsubscribe);
-
 
     let productData: any
     let selectedTimeline: string = 'Month'; // Default value
@@ -243,10 +241,13 @@
 
 .stat-value {
     margin: 0; /* You might want to reset margin for alignment, adjust as needed */
+    font-size: 140%; /* Smaller font size for the stat value */
     color: rgb(90, 88, 88) !important;
 }
 
 .stat-figure svg {
+    /* width: 50%; */
+    /* height: auto; */
     stroke: rgb(199, 0, 33) !important;
 }
 
@@ -272,24 +273,11 @@
     margin-right: 20px; /* Optional: Adds some right margin */
 }
 
-  /* .product-info {
-    flex: 1; */
-    /* border: 1px solid #000; */
-    /* padding: 10px;
-  } */
-  /* .product-image {
-    flex: 1;
-    text-align: right;
-    margin-left: 50px;
-  } */
   .product-image figure img {
     max-width: 100%;
     height: auto;
   }
-  /* .in-stock {
-    color: rgb(62, 209, 36);
-    * /font-weight: bold; */
-  /* } */
+
 
 .carousel {
     /* border: 1px solid #000; Add border to the entire carousel */

@@ -1,11 +1,11 @@
 #%%
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from ranking import mock_products, mock_brands
 import requests
 from product import get_product_id, get_product_image, get_product_name, get_product_brand, get_product_description, get_influencer, process_news, get_similar
-from influencer import get_influencer_id, get_influencer_image, get_influencer_total_likes
+from influencer import get_influencer_id, get_influencer_total_likes, get_influencer_top_products
 from ranking import news_to_product_occurence, get_cumulative_likes, get_cumulative_comments
 import pickle
 import pandas as pd
@@ -15,6 +15,7 @@ news_all = pickle.load(open("data/news_data.pkl", "rb"))[0]
 
 news_month, news_week, news_day = process_news(news_all)
 
+df_influencers = pd.read_csv('data/influencers.csv')
 
 app = FastAPI()
 
@@ -58,12 +59,18 @@ def get_video(index):
 
 @app.get("/images/{influencer_name}")
 def get_image(influencer_name: str):
-    image_path = f"data/images/{influencer_name}.jpg"
+    image_path = f"data/images_hd/{influencer_name}.jpg"
     if os.path.exists(image_path):
         return FileResponse(image_path)
     else:
         # raise HTTPException(status_code=404, detail="Image not found")
-        return FileResponse(f"data/images/namvo.jpg")
+        return FileResponse(f"data/images_hd/namvo.jpg")
+
+
+@app.get("/images/product/{product_name}")
+def _get_product_image(product_name):
+    return FileResponse(get_product_image(product_name))
+
 
 #%%
 @app.get("/home/{time}")
@@ -101,11 +108,14 @@ def get_home_data(time):
     influencers = []
     influencer_likes = get_influencer_total_likes(news) # so they sorted by likes, from highest to lowest
     for influencer, likes in influencer_likes.items():
+        ig_followers_series = df_influencers.loc[df_influencers['name'] == influencer, 'ig_followers']
+        ig_followers = ig_followers_series.iloc[0] if not ig_followers_series.empty else '0'
         influencers.append({
             "id": str(get_influencer_id(influencer)),
             "name": influencer,
-            "image": get_influencer_image(influencer),
             "likes": str(likes),
+            "ig_followers": str(ig_followers),
+            "top_products": get_influencer_top_products(news, influencer)
         })
 
     return {
@@ -158,9 +168,4 @@ def get_product(time, product_id):
         "highlight": "",
     }
 
-# %%
-
-# id = 3340
-
-# test= get_product("month", id)
 # %%
