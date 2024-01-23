@@ -221,12 +221,6 @@ h1{
     margin-right: 0; /* Remove right margin from the last item */
 }
 
-.main-container {
-    margin-top: 20px; /* Top margin */
-    margin-left: 20px; /* Left margin */
-    margin-right: 20px; /* Right margin */
-}
-
 
 .top-title {
     margin-left: 30px; /* Add left margin to the h1 tag */

@@ -87,7 +87,7 @@
         <div class="card-body">
           <p>{productData?.brand}</p>
           <h2 class="card-title">{productData?.name}</h2>
-          <p>{productData?.description}</p>
+          <p class="description">{productData?.description}</p>
           
           <br>
           
@@ -252,9 +252,9 @@
 }
 
   .main-container {
-    margin-top: 20px; /* Top margin */
-    margin-left: 20px; /* Left margin */
-    margin-right: 20px; /* Right margin */
+    margin-top: 2%; /* Top margin */
+    margin-left: 2%; /* Left margin */
+    margin-right: 2%; /* Right margin */
     /* font-family: 'Gill Sans'; */
   }
 
@@ -273,9 +273,14 @@
     margin-right: 20px; /* Optional: Adds some right margin */
 }
 
-  .product-image figure img {
+  .product-container figure img {
     max-width: 60%;
     height: auto;
+  }
+
+  .description {
+    font-size: 13px;
+    color: #000;
   }
 
 
