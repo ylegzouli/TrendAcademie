@@ -1,7 +1,6 @@
 <script lang="ts">
     import axios from "axios";
     import { influencers, startup } from '../store.ts';
-    import wallpaper from '$lib/assets/sephora_wallpaper.jpg'
 
     type Product = {
         product_id: string
@@ -55,8 +54,19 @@
 
 </script>
 
-<div class={$startup ? 'landing' : 'hidden'} style="background-image: url({wallpaper});">
-    <button class="btn btn-wide transparent" on:click={handleClick}>ENTER</button>
+<div class={$startup ? 'landing' : 'hidden'}>
+  <div class="hero min-h-screen bg-base-200">
+    <div class="hero-content text-center">
+      <div class="max-w-md">
+        <h1 class="text-5xl font-bold">Trends Academy</h1>
+        <br>
+        <p class="py-6">
+            Be a part of the future with Trends Academy – where every product sold is a trendsetter. Join us in defining the pulse of consumer desire. Trends Academy: Shaping Tomorrow's Trends Today.
+        </p>
+        <button class="btn btn-primary" on:click={handleClick}>Get Started</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class={$startup ? 'hidden' : ''}>
@@ -166,12 +176,6 @@
 </div>
 
 <style>
-
-button.transparent {
-    background: transparent;
-    color: #fff; /* Adjust color as needed */
-    border: 1px solid #fff; /* Adjust border color as needed */
-}
 
 .landing {
     background-size: cover;
