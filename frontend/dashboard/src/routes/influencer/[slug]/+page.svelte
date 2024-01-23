@@ -51,7 +51,7 @@
 
       <div class="card lg:card-side bg-base-100 shadow-xl">
         <figure>
-            <img class="mask mask-circle" src="http://localhost:8000/images/{influencer?.name}" alt="ProfilePicture"/>
+            <img class="mask mask-circle" src="http://localhost:8000/images/{influencer?.name}" alt="ProfilePicture" style="width: 200px; height: 200px;"/>
         </figure>
         <div class="card-body">
 
