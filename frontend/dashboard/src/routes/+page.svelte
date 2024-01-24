@@ -9,6 +9,7 @@
         product_mentions: string
         product_likes: string
         product_brand: string
+        product_rank: string
     };
 
     type Brand = {
@@ -53,6 +54,7 @@
     }
 
 </script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div class={$startup ? 'landing' : 'hidden'}>
   <div class="hero min-h-screen bg-base-200">
@@ -77,16 +79,16 @@
 
         </div>
         <div class="navbar-center">
-          <div class="text-lg" style="font-size: 24px;">S E P H O R A</div>
+          <div class="text-lg" style="font-size: 20px;">S E P H O R A</div>
         </div>
         <div class="navbar-end">
-            <div class="timeline-select-container">
+            <!-- <div class="timeline-select-container">
             <select class="select select-bordered select-sm max-w-xs" bind:value={selectedTimeline}>
               <option selected>Month</option>
               <option>Week</option>
               <option>Day</option>
             </select>
-          </div>
+          </div> -->
         </div>
       </div>
 
@@ -98,11 +100,19 @@
 <div class="carousel rounded-box">
     {#each products as product}
       <div class="carousel-item">
-        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M353.8 54.1L330.2 6.3c-3.9-8.3-16.1-8.6-20.4 0L286.2 54.1l-52.3 7.5c-9.3 1.4-13.3 12.9-6.4 19.8l38 37-9 52.1c-1.4 9.3 8.2 16.5 16.8 12.2l46.9-24.8 46.6 24.4c8.6 4.3 18.3-2.9 16.8-12.2l-9-52.1 38-36.6c6.8-6.8 2.9-18.3-6.4-19.8l-52.3-7.5zM256 256c-17.7 0-32 14.3-32 32V480c0 17.7 14.3 32 32 32H384c17.7 0 32-14.3 32-32V288c0-17.7-14.3-32-32-32H256zM32 320c-17.7 0-32 14.3-32 32V480c0 17.7 14.3 32 32 32H160c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32H32zm416 96v64c0 17.7 14.3 32 32 32H608c17.7 0 32-14.3 32-32V416c0-17.7-14.3-32-32-32H480c-17.7 0-32 14.3-32 32z"/></svg> -->
-        <i class="fa-light fa-ranking-star">TEST</i>  
+
         <a href="product/{product.product_id}">
           <div class="card w-96 bg-base-100 shadow-xl">
+
+            <div class="rank-container">
+                <span class="fa fa-star checked"></span>
+                <span class="rank-number">{product?.product_rank}</span>
+              </div>
+
               <figure><img src={product.product_image} alt="Shoes" /></figure>
+
+
+
             <div class="card-body">
               <p>{product?.product_brand}</p>
               <h2 class="card-title">{displayProductName(product?.product_name)}</h2>
@@ -136,6 +146,10 @@
       <div class="carousel-item">
           <a href="influencer/{influencer.name}">
           <div class="card w-96 bg-base-100 shadow-xl">
+            <!-- <div class="rank-container">
+                <span class="fa fa-star checked"></span>
+                <span class="rank-number">24</span>
+              </div> -->
             <figure>
                 <img class="mask mask-circle" src="http://localhost:8000/images/{influencer.name}" alt="ProfilePicture"/>
             </figure>
@@ -176,6 +190,32 @@
 </div>
 
 <style>
+
+.rank-container {
+    position: absolute;
+    top: 0; /* Position it at the top */
+    left: 0; /* Position it at the left */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2; /* Ensure it's above other content */
+}
+
+.rank-number {
+    position: absolute;
+    color: black;
+    font-size: 16px; /* Adjust as needed */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.checked {
+    color: rgb(218, 216, 216);
+    font-size: 400%; /* Adjust as needed */
+    z-index: 0;
+}
 
 .landing {
     background-size: cover;
@@ -252,7 +292,9 @@ h1{
     padding: 1%;
     border-radius: 3%;
     box-sizing: border-box;
-
+    position: relative; /* This ensures the rank-container positions itself relative to this div */
+    flex: 0 0 auto;
+    /* position: relative; */
 
 }
 

@@ -91,7 +91,9 @@ def plot_product_mentions(news_list: List[News], product_name: str):
         date = datetime.strptime(f_date, '%Y-%m-%d')
         mention_dates[date] = mention_dates.get(date, 0) + 1
 
-    # Create a date range covering all dates
+    # return mention_dates
+
+    # # Create a date range covering all dates
     if mention_dates:
         start_date = min(mention_dates.keys())
         end_date = max(mention_dates.keys())
@@ -99,6 +101,8 @@ def plot_product_mentions(news_list: List[News], product_name: str):
         date_range = [start_date + timedelta(days=x) for x in range(total_days + 1)]
     else:
         return "No data available for this product."
+    
+
 
     # Prepare DataFrame
     df = pd.DataFrame(date_range, columns=['Date'])
@@ -108,6 +112,8 @@ def plot_product_mentions(news_list: List[News], product_name: str):
     # Fill in the mentions
     for date in mention_dates:
         df.at[date, 'Mentions'] = mention_dates[date]
+
+    # return df
 
     # Rolling sum for the past 7 days
     df['CumulativeMentions'] = df['Mentions'].rolling('7D').sum()
@@ -123,6 +129,128 @@ def plot_product_mentions(news_list: List[News], product_name: str):
         ticklabelmode="period"
     )
     fig.show()
+
+#%%
+import pickle
+
+sample_news = pickle.load(open("data/news_data.pkl", "rb"))[0]
+
+
+# Sample product list
+# product_list = ["Master Mattes™ Liquid Eyeliner", "Blush/Bronzer Duo"]
+product_list = DATA["Product"].values.tolist()
+
+def generate_product_ranking_dataframe(news_list: List[News], products: List[str]) -> pd.DataFrame:
+    
+        # Convert 'publishedAt' from timestamp to formatted date string in each News object
+    for news in news_list:
+        # Convert to datetime object and format
+        news.publishedAt = datetime.fromtimestamp(news.publishedAt).strftime('%Y-%m-%d')
+
+    # Convert 'publishedAt' back to datetime objects for further processing
+    for news in news_list:
+        news.publishedAt = datetime.strptime(news.publishedAt, '%Y-%m-%d')
+    
+    # Find the last news date
+    last_news_date = max(news.publishedAt for news in news_list)
+
+    # Calculate date range (one month before last news date to last news date)
+    start_date = last_news_date - timedelta(days=30)
+    date_range = pd.date_range(start=start_date, end=last_news_date)
+
+    # Initialize a dictionary to hold product mention counts
+    product_mentions = {date: {product: 0 for product in products} for date in date_range}
+
+    # Count cumulative product mentions for each day
+    for news in news_list:
+        if news.publishedAt >= start_date:
+            for date in date_range[date_range >= news.publishedAt]:
+                for product in news.product_list:
+                    if product in products:
+                        product_mentions[date][product] += 1
+
+    # Convert the dictionary to a DataFrame
+    df = pd.DataFrame.from_dict(product_mentions, orient='index')
+
+    # Rank products for each day
+    for date in df.index:
+        df.loc[date] = df.loc[date].rank(method='min', ascending=False)
+
+    return df
+
+
+def generate_7day_product_ranking_dataframe(news_list: List[News], products: List[str]) -> pd.DataFrame:
+    
+        # Convert 'publishedAt' from timestamp to formatted date string in each News object
+    for news in news_list:
+        # Convert to datetime object and format
+        news.publishedAt = datetime.fromtimestamp(news.publishedAt).strftime('%Y-%m-%d')
+
+    # Convert 'publishedAt' back to datetime objects for further processing
+    for news in news_list:
+        news.publishedAt = datetime.strptime(news.publishedAt, '%Y-%m-%d')
+    
+    # Find the last news date
+    last_news_date = max(news.publishedAt for news in news_list)
+
+    # Calculate date range (one month before last news date to last news date)
+    start_date = last_news_date - timedelta(days=30)
+    date_range = pd.date_range(start=start_date, end=last_news_date)
+
+    # Initialize a dictionary to hold product mention counts
+    product_mentions = {date: {product: 0 for product in products} for date in date_range}
+
+    # Count product mentions within a rolling 7-day window for each day
+    for date in date_range:
+        start_window = date - timedelta(days=7)
+        for news in news_list:
+            if start_window < news.publishedAt <= date:
+                for product in news.product_list:
+                    if product in products:
+                        product_mentions[date][product] += 1
+
+    # Convert the dictionary to a DataFrame
+    df = pd.DataFrame.from_dict(product_mentions, orient='index')
+
+    # Rank products for each day
+    for date in df.index:
+        df.loc[date] = df.loc[date].rank(method='min', ascending=False)
+
+    return df
+
+
+
+# Generate the DataFrame
+# df = generate_7day_product_ranking_dataframe(sample_news, product_list)
+# df = generate_product_ranking_dataframe(sample_news, product_list)
+# df.head()  # Display the first few rows of the DataFrame
+# #%%
+
+# print(df["Master Mattes™ Liquid Eyeliner"].index)
+
+
+#%%
+
+# fig = px.line(df, x=df.index, y='Master Mattes™ Liquid Eyeliner', title=f'Ranking evolution of sephora products')
+# # fig = px.line(df, x=df.index, y='Lip Liner', title=f'7-Day Rolling Sum of Mentions in News')
+# fig.update_xaxes(
+#         tickformat='%Y-%m-%d',
+#         dtick="D1",  # Daily ticks
+#         ticklabelmode="period"
+#     )
+# fig.update_yaxes(autorange='reversed') 
+# fig.show()
+
+
+
+#%%
+
+# df.to_csv("data/product_ranking_7day.csv")
+
+
+
+#%%
+    
 
 def process_news(news_list: List[News]):
     all_news = news_list

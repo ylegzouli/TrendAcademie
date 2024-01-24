@@ -160,11 +160,11 @@ def run_trend_for_list_of_news(news_list: List[News]) -> List[News]:
 #%%
 # Test
 
-from extractor import extractor
+# from extractor import extractor
 
-news = extractor(nb_days=3)
-print(len(news))
-news = run_trend_for_list_of_news(news)
+# news = extractor(nb_days=60)
+# print(len(news))
+# news = run_trend_for_list_of_news(news)
 
 #%%
 ## CODE TO GET DATA FOR TIKTOK CLONE
@@ -206,10 +206,10 @@ news = run_trend_for_list_of_news(news)
 # CODE TO SAVE DATA IN PICKLE    
 
 # import pickle 
-# print(len(news))
+# # print(len(news))
 
 # print("Serialize and save the list using pickle")
-# with open('data/news_data.pkl', 'wb') as file:
+# with open('data/news_data_60.pkl', 'wb') as file:
 #     pickle.dump(news, file)
 
 # news_to_csv(news)
@@ -217,6 +217,23 @@ news = run_trend_for_list_of_news(news)
 # with open('data/news_data.pkl', 'rb') as file:
 #     loaded_news_list = pickle.load(file)
 
+
 #%%
 
 
+# import os
+# import pickle
+
+# file_path = 'data/news_data_60.pkl'
+
+# if os.path.getsize(file_path) > 0:
+#     with open(file_path, 'rb') as my_file:
+#         unpickler = pickle.Unpickler(my_file)
+#         employee_data = unpickler.load()
+#         print(employee_data)
+# else:
+#     print('The file is empty')
+
+
+
+# %%

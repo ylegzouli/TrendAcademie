@@ -5,14 +5,6 @@
     import arrow from '$lib/assets/arrow-back-ios.svg'
     import Plot from 'svelte-plotly.js';
 
-    const data = [
-    {
-      x: [1, 2, 3, 4, 5],
-      y: [1, 2, 4, 8, 16]
-    }
-  ];
-
-
 
     let slug: any;
     const unsubscribe = page.subscribe(({ params }) => {
@@ -22,6 +14,12 @@
     onDestroy(unsubscribe);
 
     let productData: any
+    let data: any = [
+      {
+        x: [],
+        y: [],
+      }
+    ];
     let selectedTimeline: string = 'Month'; // Default value
 
     async function init(timeline: string) {
@@ -29,8 +27,14 @@
             const response = await axios.get("http://localhost:8000/product/" + timeline.toLowerCase() + "/" + slug)
 
             console.log('init success')
-            console.log(response.data)
+            // console.log(response.data)
             productData = response.data
+            data = [
+              {
+                x: productData?.chart_x,
+                y: productData?.chart_y,
+              }
+            ];
 
         } catch (e) {
             console.log('init failure')
@@ -58,9 +62,12 @@
   function formatNumber(numStr) {
     const num = parseFloat(numStr);
     return !isNaN(num) ? num.toFixed(1) : '0.0';
-}
+  }
+
 
 </script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div class="main-container">
 
@@ -74,13 +81,7 @@
           <div class="text-lg" style="font-size: 20px;">S E P H O R A</div>
         </div>
         <div class="navbar-end">
-            <div class="timeline-select-container">
-            <select class="select select-bordered select-sm max-w-xs" bind:value={selectedTimeline}>
-              <option selected>Month</option>
-              <option>Week</option>
-              <option>Day</option>
-            </select>
-          </div>
+
         </div>
       </div>
 
@@ -90,6 +91,12 @@
     <div class="product-container">
 
       <div class="card lg:card-side bg-base-100 shadow-xl">
+
+        <div class="rank-container">
+          <span class="fa fa-star checked"></span>
+          <span class="rank-number">{productData?.rank}</span>
+        </div>
+
         <figure><img src={productData?.image} alt="Album"/></figure>
         <div class="card-body">
           <p class="description">{productData?.brand}</p>
@@ -206,7 +213,8 @@
 <Plot
   {data}
   layout={{
-    margin: { t: 0 }
+    margin: { t: 0 },
+    yaxis: { autorange: 'reversed' }
   }}
   fillParent='width'
   debounce={250}
@@ -214,6 +222,33 @@
 </div>
 
 <style>
+
+.rank-container {
+    position: absolute;
+    top: 0; /* Position it at the top */
+    left: 0; /* Position it at the left */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2; /* Ensure it's above other content */
+}
+
+.rank-number {
+    position: absolute;
+    color: black;
+    font-size: 16px; /* Adjust as needed */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.checked {
+    color: rgb(253, 193, 81);
+    /* color: rgb(218, 216, 216); */
+    font-size: 400%; /* Adjust as needed */
+    z-index: 0;
+}
 
 
 .stat-title{

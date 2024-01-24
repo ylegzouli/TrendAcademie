@@ -125,5 +125,7 @@ def main():
     df_top_brands = get_top_brands(df_brands, 1)
     print(df_top_brands)
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
+    
+

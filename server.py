@@ -17,6 +17,8 @@ news_month, news_week, news_day = process_news(news_all)
 
 df_influencers = pd.read_csv('data/influencers.csv')
 
+df_ranking = pd.read_csv('data/product_ranking_month.csv')
+
 app = FastAPI()
 
 # Add CORS middleware
@@ -85,7 +87,7 @@ def get_home_data(time):
     df = news_to_product_occurence(news)
     product_names = df['product_name'].tolist()
     products = []
-    for name in product_names:
+    for i, name in enumerate(product_names):
         product_id = get_product_id(name)  # Assuming get_id(name) returns the product id
         product_image = get_product_image(name)  # Assuming get_image(name) returns the image URL
         product_likes = get_cumulative_likes(name, news) / 1000
@@ -102,6 +104,7 @@ def get_home_data(time):
             "product_mentions": str(product_mention*4),
             "product_likes": str(product_likes),
             "product_brand": product_brand,
+            "product_rank": str(i+1)
         }
         products.append(product)
 
@@ -134,6 +137,13 @@ def get_product(time, product_id):
         news = news_day
     product_id = int(product_id)
     product_name = get_product_name(product_id)
+    
+    df = news_to_product_occurence(news)
+    product_names = df['product_name'].tolist()
+    i = 0
+    while product_name != product_names[i]:
+        i += 1
+    product_rank = str(i + 1)
     product_image = get_product_image(product_name)
     product_brand = get_product_brand(product_id)
     product_description = get_product_description(product_id)
@@ -144,9 +154,15 @@ def get_product(time, product_id):
     try:
         similar = products['similar_products']
         compementaire = products['complementary_products']
+        data_x = df_ranking['Unnamed: 0'].values.tolist()
+        data_y = df_ranking[product_name].values.tolist()
+
     except:
         similar = []
         compementaire = []
+        data_x = df_ranking['Unnamed: 0'].values.tolist()
+        data_y = [100 for i in range(len(df_ranking))]
+    
     try:
         product_mentions = news_to_product_occurence(news)[news_to_product_occurence(news)['product_name'] == product_name]["occurrences"].values[0] * 4
     except:
@@ -166,6 +182,9 @@ def get_product(time, product_id):
         "in_stock": "In stock",
         "influencer": product_influencer,
         "highlight": "",
+        "chart_x": data_x,
+        "chart_y": data_y,
+        "rank": product_rank
     }
 
 # %%
